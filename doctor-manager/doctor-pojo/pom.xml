@@ -6,4 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>doctor-pojo</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>project-doctor</groupId>
+  		<artifactId>doctor-common</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

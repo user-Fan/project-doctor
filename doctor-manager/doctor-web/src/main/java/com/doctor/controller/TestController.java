@@ -20,7 +20,7 @@ public class TestController {
 	public final Logger logger =  LoggerFactory.getLogger(TestController.class);
     @Autowired
     IUserService UserService;
-    @RequestMapping("action")
+    @RequestMapping("/index")
     @ResponseBody
     public TestUSer getTestUSer(){
         int a =(1>2)?1:2;
