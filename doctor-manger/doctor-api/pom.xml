@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>project-doctor</groupId>
-    <artifactId>doctor-manger</artifactId>
+    <artifactId>doctor-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>doctor-api</artifactId>
