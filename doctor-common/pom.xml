@@ -39,10 +39,9 @@
       <artifactId>junit</artifactId>
     </dependency>
     <!-- 日志处理 -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-
+	<dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+	</dependency>
   </dependencies>
 </project>
