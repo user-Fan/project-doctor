@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doctor.api.TbUserMapper" >
+  <resultMap type="com.doctor.pojo.User" id="userinfoMap">
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_age" property="userAge"/>
+        <result column="user_id_card" property="userIdCard"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="user_Email" property="userEmail"/>
+        <result column="user_address" property="userAddress"/>
+        <result column="suer_status" property="suerStatus"/>
+        <result column="user_gender" property="userGender"/>
+        <result column="creat_time" property="creatTime"/>
+        <result column="creatBy" property="creatBy"/>
+        <result column="user_login" property="userLogin"/>
+        <result column="update_time" property="update_time"/>
+        <result column="updateBy" property="updateBy"/>
+        <result column="photo" property="photo"/>
+        <result column="permissions_id" property="permissionsId"/>
+        <result column="password_value" property="Password"/>
+    </resultMap> 
+    <select id="getUserByUserLogin" parameterType="String" resultMap="userinfoMap">
+        select 
+	        user.user_id,
+	        user.user_name,
+	        user.user_age,
+	        user.user_id_card,
+	        user.user_phone,
+	        user.user_Email,
+	        user.user_address,
+	        user.suer_status,
+	        user.user_gender,
+	        user.creat_time,
+	        user.creatBy,
+	        user.user_login,
+	        user.update_time,
+	        user.updateBy,
+	        user.photo,
+	        user.permissions_id,
+	        user_password.password_value
+		from user,user_password where user_login=#{userLogin} and user.password_id = user_password.password_id;
+    </select>     
+</mapper>
