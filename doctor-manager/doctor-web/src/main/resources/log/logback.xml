@@ -36,11 +36,6 @@
     <logger name="org.cometd" level="WARN" />
     <logger name="ch.qos.logback" level="WARN" />
     <logger name="com.springapp.mvc" level="DEBUG" />
-    <logger name="cn.fserve.dao" level="DEBUG"></logger>
-    <logger name="com.doctor.controller" >
-		<level value="INFO" />
-		<appender-ref ref="logfile" />
-	</logger>
     <!-- <logger name="com.ibatis" level="DEBUG"></logger> -->
 
     <root level="info">

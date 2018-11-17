@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Inspire - Admin and Dashboard Template</title>
+<title>登陆页面</title>
 
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 
@@ -22,31 +22,31 @@
 <div class="col-lg-5 col-md-12 col-xs-12">
 <div class="card">
 <div class="card-header border-bottom text-center">
-<h4 class="card-title">Sign In</h4>
+<h4 class="card-title">登陆</h4>
 </div>
 <div class="card-body">
-<form class="form-horizontal m-t-20">
+<form class="form-horizontal m-t-20" action="/login" method ="post">
 <div class="form-group">
-<input class="form-control" type="text" required="" placeholder="Username">
+<input class="form-control" type="text" name="userLogin" required oninvalid="setCustomValidity('请输入账号')" oninput="setCustomValidity('')" placeholder="登陆账号">
 </div>
 <div class="form-group">
-<input class="form-control" type="password" required="" placeholder="Password">
+<input class="form-control" type="password" name = "password" required oninvalid="setCustomValidity('密码不能为空')" oninput="setCustomValidity('')" placeholder="密码">
 </div>
 <div class="form-group">
 <div class="custom-control custom-checkbox">
 <input type="checkbox" class="custom-control-input" id="customCheck1">
-<label class="custom-control-label" for="customCheck1">Remember me</label>
+<label class="custom-control-label" for="customCheck1">记住密码</label>
 </div>
 </div>
 <div class="form-group text-center m-t-20">
-<button class="btn btn-common btn-block" type="submit">Log In</button>
+<button class="btn btn-common btn-block" type="submit">确 认</button>
 </div>
 <div class="form-group">
 <div class="float-right">
-<a href="forgot-password.html" class="text-muted"><i class="lni-lock"></i> Forgot your password?</a>
+<a href="forgot-password.html" class="text-muted"><i class="lni-lock"></i> 忘记密码了吗?</a>
 </div>
 <div class="float-left">
-<a href="sign-up.html" class="text-muted"><i class="lni-user"></i> Create an account</a>
+<a href="sign-up.html" class="text-muted"><i class="lni-user"></i> 注 册</a>
 </div>
 </div>
 </form>
