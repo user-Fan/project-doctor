@@ -7,5 +7,5 @@ import com.doctor.pojo.User;
 
 public interface TbUserMapper {
 	
-    public List<User> getUserByUserLogin(String wuwukai);
+    public List<User> getUserByUserLogin(String userLogin);
 }
