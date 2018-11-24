@@ -10,19 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doctor.Iservice.IUserService;
-import com.doctor.controller.TestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.doctor.pojo.User;
-import com.doctor.service.UserService;
-import sun.security.util.Password;
-
-import java.awt.datatransfer.StringSelection;
 
 @Component
 public class Interceptor implements HandlerInterceptor {
