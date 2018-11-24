@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doctor.Iservice.IUserService;
 import com.doctor.common.MD5Utill;
-import com.doctor.pojo.TestUSer;
 import com.doctor.pojo.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +25,8 @@ import javax.servlet.http.Cookie;
  * @Description:
  */
 @Controller
-public class TestController {
-	public final Logger logger = LoggerFactory.getLogger(TestController.class);
+public class LoginController {
+	public final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@Autowired
 	IUserService UserService;
 
@@ -61,7 +59,7 @@ public class TestController {
 					if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword())) {
 						logger.info("登陆成功---用户为-------" + user_.getUserName());
 						//cookie,和session中设置用户信息
-						setUserInfo(user,request,response);
+						setUserInfo(user_,request,response);
 						response.sendRedirect("/");
 						return "index";
 					} else {
@@ -84,13 +82,16 @@ public class TestController {
 		return "loginPage";
 	}
 
-	public void setUserInfo(User user, HttpServletRequest request, HttpServletResponse response) {
+	public void setUserInfo(User user_, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		logger.info("外部的SessionId:" + session.getId());
-		session.setAttribute("userLogin", user.getUserLogin());
-		session.setAttribute("password", user.getPassword());
+		session.setAttribute("userLogin", user_.getUserLogin());
+		session.setAttribute("password", user_.getPassword());
+		session.setAttribute("userinfo", user_);
+
+
 		//把用户账号设置到Cookie中
-		Cookie userInfoCookie = new Cookie("userLogin", user.getUserLogin());
+		Cookie userInfoCookie = new Cookie("userLogin", user_.getUserLogin());
 		userInfoCookie.setMaxAge(500);
 		userInfoCookie.setPath("/");
 		response.addCookie(userInfoCookie);

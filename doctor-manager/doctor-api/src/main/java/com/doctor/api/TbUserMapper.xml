@@ -9,7 +9,7 @@
         <result column="user_phone" property="userPhone"/>
         <result column="user_Email" property="userEmail"/>
         <result column="user_address" property="userAddress"/>
-        <result column="suer_status" property="suerStatus"/>
+        <result column="user_status" property="userStatus"/>
         <result column="user_gender" property="userGender"/>
         <result column="creat_time" property="creatTime"/>
         <result column="creatBy" property="creatBy"/>
@@ -29,7 +29,7 @@
 	        user.user_phone,
 	        user.user_Email,
 	        user.user_address,
-	        user.suer_status,
+	        user.user_status,
 	        user.user_gender,
 	        user.creat_time,
 	        user.creatBy,
