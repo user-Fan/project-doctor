@@ -9,12 +9,17 @@
 
 	<context:component-scan base-package="com.doctor.controller"/>
 	<mvc:annotation-driven />
+	<!--重要！将你的SwaggerConfig配置类注入-->
+	<bean class="com.doctor.Interceptor.Swagger2"/>
+	<!--重要！配置swagger资源不被拦截-->
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
 	<bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
 		<property name="contentType" value="text/html; charset=UTF-8"/>
@@ -72,4 +77,6 @@
 			<bean class="com.doctor.Interceptor.Interceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+
+
 </beans>
