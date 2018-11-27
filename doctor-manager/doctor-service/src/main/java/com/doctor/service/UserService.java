@@ -42,4 +42,35 @@ public class UserService implements IUserService {
 		logger.info("users为空");
 		return null;
 	}
+
+	@Override
+	public List<User> findByPhone(String phone) {
+		logger.info("进入service");
+		logger.info("进入mapper");
+		List<User> users = tbUserMapper.findByPhone(phone);
+		logger.info("mapper查询结束");
+		if (users != null && users.size() > 0) {
+			if (users.get(0) != null && !users.equals("")) {
+				logger.info("取出结果集合" + users.toString());
+				return users;
+			}
+		}
+		logger.info("users为空");
+		return null;
+	}
+
+	@Override
+	public int register(User user) {
+		return tbUserMapper.register(user);
+	}
+
+	@Override
+	public List<User> findByUserLogin(String userLogin) {
+		return tbUserMapper.findByUserLogin(userLogin);
+	}
+
+	@Override
+	public int insertPassword(User user){
+		return  tbUserMapper.insertPassword(user);
+	}
 }

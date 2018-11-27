@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>注册页面</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+</head>
+
+<body>
+<div class="wrapper-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header border-bottom text-center">
+                        <h4 class="card-title">注册</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal m-t-20" action="/register" method="POST">
+                            <div class="form-group">
+                                <input class="form-control" type="email" name="userEmail" required="" placeholder="邮箱"
+                                       onblur="isEmail(this.value)" />
+                                <div style="display:none;" id="em">
+                                    <p style="color:red">邮箱为空或者格式不正确！</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" name="userPhone" required="" placeholder="手机号"
+                                       onblur="isPh(this.value)">
+                                <div style="display:none;" id="ph1">
+                                    <p style="color:red">手机号为空或者格式不正确！</p>
+                                </div>
+                                <div style="display:none;" id="ph2">
+                                    <p style="color:red">已有该手机号，请直接登录！</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" required="" name="userLogin" placeholder="用户名"
+                                       onblur="isName(this.value)">
+                                <div style="display:none;" id="na1">
+                                    <p style="color:red">用户名为空！</p>
+                                </div>
+                                <div style="display:none;" id="na2">
+                                    <p style="color:red">用户名已存在！</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" name="Password" type="password" required="" placeholder="密码"
+                                       onblur="isPw1(this.value)">
+                                <div style="display:none;" id="pwd1">
+                                    <p style="color:red">密码为空！</p>
+                                </div>
+                                <div style="display:none;" id="pwd2">
+                                    <p style="color:red">密码长度为6-18位！</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" required="" placeholder="确认密码"
+                                       onblur="isPw2(this.value)">
+                                <div style="display:none;" id="pws1">
+                                    <p style="color:red">密码不相同 ！</p>
+                                </div>
+                                <div style="display:none;" id="pws2">
+                                    <p style="color:red">确认密码为空 ！</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">我同意 <a href="#" class="text-muted">用户协议</a></label>
+                                </div>
+                            </div>
+                            <div class="form-group text-center m-t-20">
+                                <button class="btn btn-common btn-block" disabled="" ; id="zc" type="submit"
+                                        onclick="register()">注册
+
+                                </button>
+                            </div>
+                            <div class="form-group m-t-10 mb-0">
+                                <div class="text-center">
+                                    <a href="login.html" class="text-muted">已有账号?</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
+
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+<script type="text/javascript">
+    // 验证邮箱
+    function isEmail(strEmail) {
+        var flag = strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
+        if (flag == -1) {
+            document.getElementById("em").style.display = "";
+        } else {
+            document.getElementById("em").style.display = "none";
+        }
+    }
+    // 验证手机号
+    function isPh(phones) {
+        var RegCellPhone = /^(1)([0-9]{10})?$/;
+        var falg = phones.search(RegCellPhone);
+        if (falg == -1) {
+            document.getElementById("ph1").style.display = "";
+        } else {
+            document.getElementById("ph1").style.display = "none";
+        }
+
+        $.ajax({
+            url: '/getUserName',
+            type: 'get',
+            data: { 'params': phones, 'type': 1 },
+            success: function (success) {
+                if (success == 1) {
+                    document.getElementById("ph2").style.display = "";
+                } else {
+                    document.getElementById("ph2").style.display = "none";
+                }
+            }
+        })
+    }
+    // 验证用户名
+    function isName(params) {
+        if (params == '') {
+            document.getElementById("na1").style.display = "";
+        } else {
+            document.getElementById("na1").style.display = "none";
+        }
+
+        $.ajax({
+            url: '/getUserName',
+            type: 'get',
+            data: { 'params': params, 'type': 2 },
+            success: function (success) {
+                if (success == 1) {
+                    document.getElementById("na2").style.display = "";
+                } else {
+                    document.getElementById("na2").style.display = "none";
+                }
+            }
+        })
+    }
+    // 验证密码
+    var password1 = null;
+    function isPw1(params) {
+        password1 = params;
+        if (params == '') {
+            document.getElementById("pwd1").style.display = "";
+            document.getElementById("pwd2").style.display = "none";
+        } else if (params.length < 6 || params.length > 18) {
+            document.getElementById("pwd1").style.display = "none";
+            document.getElementById("pwd2").style.display = "";
+        } else {
+            document.getElementById("pwd1").style.display = "none";
+            document.getElementById("pwd2").style.display = "none";
+        }
+    }
+    // 验证确认密码
+    function isPw2(params) {
+        if (params == '') {
+            document.getElementById("pws2").style.display = "";
+            document.getElementById("pws1").style.display = "none";
+        } else if (params != password1) {
+            document.getElementById("pws2").style.display = "none";
+            document.getElementById("pws1").style.display = "";
+        } else {
+            document.getElementById("pws1").style.display = "none";
+            document.getElementById("pws1").style.display = "none";
+        }
+    }
+    // 复选框验证
+    $("#customCheck1").click(function () {
+        if ($(this).prop("checked")) {
+            $("#zc").attr("disabled", false);
+        } else {
+
+            $("#zc").attr("disabled", true);
+        }
+        64
+    });
+
+    function register(){
+        if( document.getElementById("em").style.display == ""){
+            alert('邮箱为空或者格式不正确！');
+        }else if(document.getElementById("ph1").style.display == ""){
+            alert('手机号为空或者格式不正确！');
+        }else if(document.getElementById("ph2").style.display == ""){
+            alert('已有该手机号，请直接登录！');
+        }else if(document.getElementById("na1").style.display == ""){
+            alert('用户名为空！');
+        }else if(document.getElementById("na2").style.display == ""){
+            alert('用户名已存在！');
+        }else if(document.getElementById("pwd1").style.display == ""){
+            alert('密码为空！');
+        }else if(document.getElementById("pwd2").style.display == ""){
+            alert('密码长度为6-18位！');
+        }else if(document.getElementById("pws1").style.display == ""){
+            alert('密码不相同 ！');
+        }else if(document.getElementById("pws2").style.display == ""){
+            alert('确认密码为空 ！');
+        }
+    }
+</script>
+
+
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>
