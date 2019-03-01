@@ -27,10 +27,10 @@
                         <h4 class="card-title">注册</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal m-t-20" action="/register" method="POST">
+                        <form class="form-horizontal m-t-20" action="/register" method="POST" target="form">
                             <div class="form-group">
                                 <input class="form-control" type="email" name="userEmail" required="" placeholder="邮箱"
-                                       onblur="isEmail(this.value)" />
+                                       onblur="isEmail(this.value)"/>
                                 <div style="display:none;" id="em">
                                     <p style="color:red">邮箱为空或者格式不正确！</p>
                                 </div>
@@ -79,7 +79,8 @@
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">我同意 <a href="#" class="text-muted">用户协议</a></label>
+                                    <label class="custom-control-label" for="customCheck1">我同意 <a href="#"
+                                                                                                  class="text-muted">用户协议</a></label>
                                 </div>
                             </div>
                             <div class="form-group text-center m-t-20">
@@ -87,6 +88,7 @@
                                         onclick="register()">注册
 
                                 </button>
+                                <iframe name="form" id="form" style="display: none"><p>注册成功</p></iframe>
                             </div>
                             <div class="form-group m-t-10 mb-0">
                                 <div class="text-center">
@@ -111,6 +113,19 @@
 <script src="assets/js/jquery.app.js"></script>
 <script src="assets/js/main.js"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#zc').click();
+        $('#form').load(function () {
+            var text = $(this).contents().find("body").text();
+            var j = $.parseJSON(text);
+            if (JSON.stringify(j.code) == 0) {
+                alert(JSON.stringify(j.msg));
+            } else if (JSON.stringify(j.code) == 1) {
+                alert(JSON.stringify(j.msg));
+            }
+        });
+    })
+
     // 验证邮箱
     function isEmail(strEmail) {
         var flag = strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/);
@@ -120,6 +135,7 @@
             document.getElementById("em").style.display = "none";
         }
     }
+
     // 验证手机号
     function isPh(phones) {
         var RegCellPhone = /^(1)([0-9]{10})?$/;
@@ -133,7 +149,7 @@
         $.ajax({
             url: '/getUserName',
             type: 'get',
-            data: { 'params': phones, 'type': 1 },
+            data: {'params': phones, 'type': 1},
             success: function (success) {
                 if (success == 1) {
                     document.getElementById("ph2").style.display = "";
@@ -143,6 +159,7 @@
             }
         })
     }
+
     // 验证用户名
     function isName(params) {
         if (params == '') {
@@ -154,18 +171,20 @@
         $.ajax({
             url: '/getUserName',
             type: 'get',
-            data: { 'params': params, 'type': 2 },
+            data: {'params': params, 'type': 2},
             success: function (success) {
                 if (success == 1) {
                     document.getElementById("na2").style.display = "";
-                } else {
+                } else if (success == 2) {
                     document.getElementById("na2").style.display = "none";
                 }
             }
         })
     }
+
     // 验证密码
     var password1 = null;
+
     function isPw1(params) {
         password1 = params;
         if (params == '') {
@@ -179,6 +198,7 @@
             document.getElementById("pwd2").style.display = "none";
         }
     }
+
     // 验证确认密码
     function isPw2(params) {
         if (params == '') {
@@ -192,43 +212,38 @@
             document.getElementById("pws1").style.display = "none";
         }
     }
+
     // 复选框验证
     $("#customCheck1").click(function () {
         if ($(this).prop("checked")) {
             $("#zc").attr("disabled", false);
         } else {
-
             $("#zc").attr("disabled", true);
         }
         64
     });
 
-    function register(){
-        if( document.getElementById("em").style.display == ""){
+    function register() {
+        if (document.getElementById("em").style.display == "") {
             alert('邮箱为空或者格式不正确！');
-        }else if(document.getElementById("ph1").style.display == ""){
+        } else if (document.getElementById("ph1").style.display == "") {
             alert('手机号为空或者格式不正确！');
-        }else if(document.getElementById("ph2").style.display == ""){
+        } else if (document.getElementById("ph2").style.display == "") {
             alert('已有该手机号，请直接登录！');
-        }else if(document.getElementById("na1").style.display == ""){
+        } else if (document.getElementById("na1").style.display == "") {
             alert('用户名为空！');
-        }else if(document.getElementById("na2").style.display == ""){
+        } else if (document.getElementById("na2").style.display == "") {
             alert('用户名已存在！');
-        }else if(document.getElementById("pwd1").style.display == ""){
+        } else if (document.getElementById("pwd1").style.display == "") {
             alert('密码为空！');
-        }else if(document.getElementById("pwd2").style.display == ""){
+        } else if (document.getElementById("pwd2").style.display == "") {
             alert('密码长度为6-18位！');
-        }else if(document.getElementById("pws1").style.display == ""){
+        } else if (document.getElementById("pws1").style.display == "") {
             alert('密码不相同 ！');
-        }else if(document.getElementById("pws2").style.display == ""){
+        } else if (document.getElementById("pws2").style.display == "") {
             alert('确认密码为空 ！');
         }
     }
 </script>
-
-
 </body>
-
-<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
-
 </html>

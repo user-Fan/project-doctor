@@ -19,6 +19,7 @@
         <result column="photo" property="photo"/>
         <result column="permissions_id" property="permissionsId"/>
         <result column="password_value" property="Password"/>
+	  <result column="password_id" property="passwordId"/>
     </resultMap> 
     <select id="getUserByUserLogin" parameterType="String" resultMap="userinfoMap">
         select 
@@ -87,13 +88,17 @@
     </select>
 
     <insert id="register" parameterType="com.doctor.pojo.User" >
-        insert into user(user_login,user_phone,user_Email)
-        values(#{userLogin},#{userPhone},#{userEmail})
+        insert into user(user_login,user_phone,user_Email,creat_time)
+        values(#{userLogin},#{userPhone},#{userEmail},#{creatTime})
     </insert>
 
     <insert id="insertPassword" parameterType="com.doctor.pojo.User" >
         insert into user_password(user_id,password_value)
         values(#{userId},#{Password})
     </insert>
+
+	<update id="updatePasswordId" parameterType="Integer">
+		update user set password_id = #{passwordId} where user_id = #{userId}
+	</update>
 
 </mapper>

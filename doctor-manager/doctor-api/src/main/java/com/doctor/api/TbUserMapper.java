@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.doctor.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface TbUserMapper {
 
@@ -17,4 +18,5 @@ public interface TbUserMapper {
 
     int insertPassword(User user);
 
+    int updatePasswordId(@Param("userId") Integer userId,@Param("passwordId")  Integer passwordId);
 }

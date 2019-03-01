@@ -11,12 +11,13 @@ public interface IUserService {
     List<User> getUserUserLogin(String userLogin );
     List<User> findByPhone(String phone);
 
-    @Transactional
-    int register(User user);
+    @Transactional(rollbackFor = {Exception.class})
+    String register(User user);
 
     List<User> findByUserLogin(String userLogin);
 
     @Transactional
     int insertPassword(User user);
 
+    int updatePasswordId(Integer userId,Integer passwordId);
 }
