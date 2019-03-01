@@ -29,15 +29,29 @@
                     <div class="card-body">
                         <form class="form-horizontal m-t-20" action="/register" method="POST" target="form">
                             <div class="form-group">
+                                <select class="form-control" id="exampleSelectGender" style="font-size: 13px"
+                                        onchange="show_sub()">
+                                    <option value="0">请选择注册人员</option>
+                                    <option value="1">用户</option>
+                                    <option value="2">医生</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" style="display:none;">
+                                <input class="form-control" id="name1" type="text" name="userAge" required=""
+                                       placeholder="人员" onblur="isType(this.value)" style="font-size: 13px"/>
+                            </div>
+
+                            <div class="form-group">
                                 <input class="form-control" type="email" name="userEmail" required="" placeholder="邮箱"
-                                       onblur="isEmail(this.value)"/>
+                                       onblur="isEmail(this.value)" style="font-size: 13px"/>
                                 <div style="display:none;" id="em">
                                     <p style="color:red">邮箱为空或者格式不正确！</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="number" name="userPhone" required="" placeholder="手机号"
-                                       onblur="isPh(this.value)">
+                                       onblur="isPh(this.value) " style="font-size: 13px">
                                 <div style="display:none;" id="ph1">
                                     <p style="color:red">手机号为空或者格式不正确！</p>
                                 </div>
@@ -47,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="text" required="" name="userLogin" placeholder="用户名"
-                                       onblur="isName(this.value)">
+                                       onblur="isName(this.value) " style="font-size: 13px">
                                 <div style="display:none;" id="na1">
                                     <p style="color:red">用户名为空！</p>
                                 </div>
@@ -58,7 +72,7 @@
 
                             <div class="form-group">
                                 <input class="form-control" name="Password" type="password" required="" placeholder="密码"
-                                       onblur="isPw1(this.value)">
+                                       onblur="isPw1(this.value) " style="font-size: 13px">
                                 <div style="display:none;" id="pwd1">
                                     <p style="color:red">密码为空！</p>
                                 </div>
@@ -68,7 +82,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" required="" placeholder="确认密码"
-                                       onblur="isPw2(this.value)">
+                                       onblur="isPw2(this.value) " style="font-size: 13px">
                                 <div style="display:none;" id="pws1">
                                     <p style="color:red">密码不相同 ！</p>
                                 </div>
@@ -113,6 +127,17 @@
 <script src="assets/js/jquery.app.js"></script>
 <script src="assets/js/main.js"></script>
 <script type="text/javascript">
+    window.onload = function () {
+        show_sub();
+    }
+
+    function show_sub() {
+        //alert($("#exampleSelectGender").find("option:selected").attr("value")); //原生
+        // alert($("#exampleSelectGender").find("option:selected").val()); //加入jq库
+        $('#name1').val($("#exampleSelectGender").find("option:selected").val());
+    }
+
+
     $(document).ready(function () {
         $('#zc').click();
         $('#form').load(function () {
@@ -145,19 +170,23 @@
         } else {
             document.getElementById("ph1").style.display = "none";
         }
-
-        $.ajax({
-            url: '/getUserName',
-            type: 'get',
-            data: {'params': phones, 'type': 1},
-            success: function (success) {
-                if (success == 1) {
-                    document.getElementById("ph2").style.display = "";
-                } else {
-                    document.getElementById("ph2").style.display = "none";
+        if (phones!=''){
+            $.ajax({
+                url: '/getUserName',
+                type: 'get',
+                data: {
+                    'params': phones,
+                    'type': 1
+                },
+                success: function (success) {
+                    if (success == 1) {
+                        document.getElementById("ph2").style.display = "";
+                    } else {
+                        document.getElementById("ph2").style.display = "none";
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     // 验证用户名
@@ -168,18 +197,23 @@
             document.getElementById("na1").style.display = "none";
         }
 
-        $.ajax({
-            url: '/getUserName',
-            type: 'get',
-            data: {'params': params, 'type': 2},
-            success: function (success) {
-                if (success == 1) {
-                    document.getElementById("na2").style.display = "";
-                } else if (success == 2) {
-                    document.getElementById("na2").style.display = "none";
+        if (params!='') {
+            $.ajax({
+                url: '/getUserName',
+                type: 'get',
+                data: {
+                    'params': params,
+                    'type': 2
+                },
+                success: function (success) {
+                    if (success == 1) {
+                        document.getElementById("na2").style.display = "";
+                    } else if (success == 2) {
+                        document.getElementById("na2").style.display = "none";
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     // 验证密码
@@ -246,4 +280,5 @@
     }
 </script>
 </body>
+
 </html>

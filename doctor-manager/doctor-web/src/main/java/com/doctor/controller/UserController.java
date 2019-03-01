@@ -1,6 +1,6 @@
 package com.doctor.controller;
 
-
+import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserPasswordSevice;
 import com.doctor.Iservice.IUserService;
 import com.doctor.common.ReturnUtil;
@@ -37,6 +37,8 @@ public class UserController {
     private IUserService userService;
     @Autowired
     private IUserPasswordSevice userPasswordSevice;
+    @Autowired
+    private IDoctorService doctorService;
 
     @Autowired
     private IUserService UserService;
@@ -61,12 +63,12 @@ public class UserController {
     ) {
         //当type等于1时查询是否有此手机号
         if (type == 1) {
-            if (null == userService.findByPhone(params)) {
+            if (null == userService.findByPhone(params) && null == doctorService.findByPhone(params)) {
                 return 2;
             }
             //当type等于2时查询是否有此登录名
         } else if (type == 2) {
-            if (null == userService.getUserUserLogin(params)) {
+            if (null == userService.getUserUserLogin(params) && null == doctorService.findByAccount(params)) {
                 return 2;
             }
             //当type不等于1和2时 报错
@@ -84,6 +86,8 @@ public class UserController {
         try {
             if (null == user) {
                 return ReturnUtil.toJSONString(1, "没有注册信息", null);
+            } else if (null == user.getUserAge() || user.getUserAge() == 0) {
+                return ReturnUtil.toJSONString(1, "请选择注册人员", null);
             } else if (null == user.getUserEmail()) {
                 return ReturnUtil.toJSONString(1, "请输入邮箱", null);
             } else if (null == user.getUserPhone()) {
