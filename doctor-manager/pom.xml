@@ -25,6 +25,34 @@
             <artifactId>logback-ext-spring</artifactId>
             <version>0.1.4</version>
         </dependency>
+      <!--springfox的核心jar包-->
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger2</artifactId>
+          <version>2.6.1</version>
+      </dependency>
+      <!--springfox-ui的jar包(里面包含了swagger的界面静态文件)-->
+      <dependency>
+          <groupId>io.springfox</groupId>
+          <artifactId>springfox-swagger-ui</artifactId>
+          <version>2.6.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
+          <version>1.2.56</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
+          <version>1.2.56</version>
+      </dependency>
   </dependencies>
   <modules>
   	<module>doctor-api</module>

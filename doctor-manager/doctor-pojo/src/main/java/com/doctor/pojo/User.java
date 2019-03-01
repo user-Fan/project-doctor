@@ -28,7 +28,7 @@ public class User {
 	private String userPhone;
 	private String userEmail;
 	private String userAddress;
-	private Integer suerStatus;
+	private Integer userStatus;
 	private String userGender;
 	private Date creatTime;
 	private String creatBy;
@@ -38,49 +38,15 @@ public class User {
 	private String photo;
 	private Integer permissionsId;
 	private String Password;
+	private Integer passwordId;
 
 	public User() {
 		super();
 	}
 
-	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail,
-			String userAddress, Integer suerStatus, String userGender, Date creatTime, String creatBy, String userLogin,
-			Integer update_time, String updateBy, String photo, Integer permissionsId, String password) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userAge = userAge;
-		this.userIdCard = userIdCard;
-		this.userPhone = userPhone;
-		this.userEmail = userEmail;
-		this.userAddress = userAddress;
-		this.suerStatus = suerStatus;
-		this.userGender = userGender;
-		this.creatTime = creatTime;
-		this.creatBy = creatBy;
-		this.userLogin = userLogin;
-		this.update_time = update_time;
-		this.updateBy = updateBy;
-		this.photo = photo;
-		this.permissionsId = permissionsId;
-		this.Password = password;
-	}
+	public Integer getPasswordId(){return passwordId;}
 
-	public Integer getUpdate_time() {
-		return update_time;
-	}
-
-	public void setUpdate_time(Integer update_time) {
-		this.update_time = update_time;
-	}
-
-	public String getPassword() {
-		return Password;
-	}
-
-	public void setPassword(String password) {
-		Password = password;
-	}
+	public void setPasswordId(Integer passwordId){this.passwordId = passwordId;}
 
 	public Integer getUserId() {
 		return userId;
@@ -138,12 +104,12 @@ public class User {
 		this.userAddress = userAddress;
 	}
 
-	public Integer getSuerStatus() {
-		return suerStatus;
+	public Integer getUserStatus() {
+		return userStatus;
 	}
 
-	public void setSuerStatus(Integer suerStatus) {
-		this.suerStatus = suerStatus;
+	public void setUserStatus(Integer userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	public String getUserGender() {
@@ -178,6 +144,14 @@ public class User {
 		this.userLogin = userLogin;
 	}
 
+	public Integer getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(Integer update_time) {
+		this.update_time = update_time;
+	}
+
 	public String getUpdateBy() {
 		return updateBy;
 	}
@@ -202,13 +176,55 @@ public class User {
 		this.permissionsId = permissionsId;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userAge=" + userAge + ", userIdCard="
-				+ userIdCard + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userAddress=" + userAddress
-				+ ", suerStatus=" + suerStatus + ", userGender=" + userGender + ", creatTime=" + creatTime
-				+ ", creatBy=" + creatBy + ", userLogin=" + userLogin + ", update_time=" + update_time + ", updateBy="
-				+ updateBy + ", photo=" + photo + ", permissionsId=" + permissionsId + ", Password=" + Password + "]";
+	public String getPassword() {
+		return Password;
 	}
 
+	public void setPassword(String password) {
+		Password = password;
+	}
+
+	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail, String userAddress, Integer userStatus, String userGender, Date creatTime, String creatBy, String userLogin, Integer update_time, String updateBy, String photo, Integer permissionsId, String password,Integer passwordId) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userAge = userAge;
+		this.userIdCard = userIdCard;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userAddress = userAddress;
+		this.userStatus = userStatus;
+		this.userGender = userGender;
+		this.creatTime = creatTime;
+		this.creatBy = creatBy;
+		this.userLogin = userLogin;
+		this.update_time = update_time;
+		this.updateBy = updateBy;
+		this.photo = photo;
+		this.permissionsId = permissionsId;
+		Password = password;
+		this.passwordId = passwordId;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId=" + userId +
+				", userName='" + userName + '\'' +
+				", userAge=" + userAge +
+				", userIdCard='" + userIdCard + '\'' +
+				", userPhone='" + userPhone + '\'' +
+				", userEmail='" + userEmail + '\'' +
+				", userAddress='" + userAddress + '\'' +
+				", userStatus=" + userStatus +
+				", userGender='" + userGender + '\'' +
+				", creatTime=" + creatTime +
+				", creatBy='" + creatBy + '\'' +
+				", userLogin='" + userLogin + '\'' +
+				", update_time=" + update_time +
+				", updateBy='" + updateBy + '\'' +
+				", photo='" + photo + '\'' +
+				", permissionsId=" + permissionsId +
+				", Password='" + Password + '\'' +
+				'}';
+	}
 }

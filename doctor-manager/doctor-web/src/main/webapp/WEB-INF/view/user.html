@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inspire - Admin and Dashboard Template</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+
+    <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+
+    <style>
+        .inner-container {
+            position: absolute;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        /* for Chrome 只针对谷歌浏览器*/
+        .inner-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="inner-container">
+
+
+<div class="page-container">
+
+    <div class="main-content">
+        <div class="container-fluid">
+
+            <div class="breadcrumb-wrapper row">
+                <div class="col-12 col-lg-3 col-md-6">
+                    <h4 class="page-title">Profile</h4>
+                </div>
+                <div class="col-12 col-lg-9 col-md-6">
+                    <ol class="breadcrumb float-right">
+                        <li><a href="#">Pages</a></li>
+                        <li class="active"> / Profile</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-12 col-md-4">
+                    <div class="profile-bg">
+                        <div class="user-profile">
+                            <figure class="profile-wall-img">
+                                <img class="img-fluid" src="assets/img/profile/user-bg.jpg" alt="User Wall">
+                            </figure>
+                            <div class="profile-body">
+                                <figure class="profile-user-avatar">
+                                    <img src="assets/img/profile/user1.jpg" alt="User Wall">
+                                </figure>
+                                <h3 class="profile-user-name" id = "iii"></h3>
+                                <div class="profile-user-description">
+                                    <p>欢迎使用XXX网上挂号系统，我们会给您带来更好的服务</p>
+                                </div>
+                                <div class="m-t-5">
+                                    <button type="button" class="btn btn-common waves-effect waves-light"
+                                            data-toggle="modal" data-target=".bs-example-modal-center">完善信息
+                                    </button>
+                                </div>
+                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+                                     aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Center modal</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="forms-sample" action="/editUserInfo">
+                                                    <div class="form-group row">
+                                                        <label for="exampleInputUsername2"
+                                                               class="col-sm-3 col-form-label">姓名</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control"
+                                                                   id="exampleInputUsername2" name="userName"
+                                                                   value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="exampleInputEmail2"
+                                                               class="col-sm-3 col-form-label">年龄</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control"
+                                                                   id="exampleInputEmail2" name="userAge"
+                                                                   value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="exampleInputMobile"
+                                                               class="col-sm-3 col-form-label">身份证号</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control"
+                                                                   id="exampleInputMobile" name="userIdCard"
+                                                                   value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="exampleInputPassword2"
+                                                               class="col-sm-3 col-form-label">地址</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control"
+                                                                   id="exampleInputPassword2" name="userAddress"
+                                                                   value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="exampleInputConfirmPassword2"
+                                                               class="col-sm-3 col-form-label">手机号</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control"
+                                                                   id="exampleInputConfirmPassword2"
+                                                                   value="">
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-common mr-3">确认</button>
+                                                    <button class="btn btn-light">返回</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row border-top m-t-20">
+                                <div
+                                        class="col-4 border-right d-flex flex-column justify-content-center align-items-center py-4">
+                                    <h3>274</h3>
+                                    <small>我的积分</small>
+                                </div>
+                                <div
+                                        class="col-4 border-right d-flex flex-column justify-content-center align-items-center py-4">
+                                    <h3>已用积分</h3>
+                                    <small>Followers</small>
+                                </div>
+                                <div
+                                        class="col-4 border-right d-flex flex-column justify-content-center align-items-center py-4">
+                                    <h3>充值</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-8">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form">
+                                <div class="form-group floating-label">
+                                        <textarea class="form-control form-control" row="7"
+                                                  placeholder="填写您的建议"></textarea>
+                                </div>
+                            </form>
+                            <div class="m-b-20">
+                                <div class="float-left">
+                                    <a class="btn bg-transparent"><i class="lni-camera" aria-hidden="true"></i></a>
+                                    <a class="btn bg-transparent"><i class="lni-map-marker"
+                                                                     aria-hidden="true"></i></a>
+                                    <a class="btn bg-transparent"><i class="lni-paperclip"
+                                                                     aria-hidden="true"></i></a>
+                                </div>
+                                <a href="#" class="btn btn-common float-right">Post</a>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div id="activity" class="m-t-20">
+                                <div class="table-responsive">
+                                    <h3 scope="row" style='text-align: center;'>我的资料</h3>
+                                    <table class="table table-striped mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">姓名</th>
+                                            <th id = "aaa"> </th>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">年龄</th>
+                                            <th id = "bbb"> </th>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">性别</th>
+                                            <th id = "ccc"> </th>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">身份证号</th>
+                                            <th id = "ddd"> </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">手机号</th>
+                                            <th id = "eee"> </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">邮箱</th>
+                                            <th id = "fff"></th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">登陆名</th>
+                                            <th id = "ggg"> }</th>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">地址</th>
+                                            <th id = "hhh"> </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script src="assets/plugins/morris/morris.min.js"></script>
+<script src="assets/plugins/raphael/raphael-min.js"></script>
+<script src="assets/js/dashborad2.js"></script>
+<script type="text/javascript">
+    $.ajax
+    ({
+        cache: false,
+        async: false,
+        dataType: 'json', type: 'post',
+        url: "/userinfo",
+        success: function (data) {
+            $("#exampleInputUsername2").val(data.userName);
+            $("#exampleInputEmail2").val(data.userAge);
+            $("#exampleInputMobile").val(data.userIdCard);
+            $("#exampleInputPassword2").val(data.userAddress);
+            $("#exampleInputConfirmPassword2").val(data.userPhone);
+
+            $("#iii").text(data.userName);
+            $("#aaa").text(data.userName);
+            $("#bbb").text( data.userAge);
+            $("#ccc").text(data.userGender);
+            $("#ddd").text(data.userIdCard);
+            $("#eee").text(data.userPhone);
+            $("#fff").text(data.userEmail);
+            $("#ggg").text(data.userLogin);
+            $("#hhh").text(data.userAddress);
+
+
+        }
+    });
+</script>
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>

@@ -9,7 +9,7 @@
         <result column="user_phone" property="userPhone"/>
         <result column="user_Email" property="userEmail"/>
         <result column="user_address" property="userAddress"/>
-        <result column="suer_status" property="suerStatus"/>
+        <result column="user_status" property="userStatus"/>
         <result column="user_gender" property="userGender"/>
         <result column="creat_time" property="creatTime"/>
         <result column="creatBy" property="creatBy"/>
@@ -19,7 +19,9 @@
         <result column="photo" property="photo"/>
         <result column="permissions_id" property="permissionsId"/>
         <result column="password_value" property="Password"/>
-    </resultMap> 
+	  <result column="password_id" property="passwordId"/>
+    </resultMap>
+
     <select id="getUserByUserLogin" parameterType="String" resultMap="userinfoMap">
         select 
 	        user.user_id,
@@ -29,7 +31,7 @@
 	        user.user_phone,
 	        user.user_Email,
 	        user.user_address,
-	        user.suer_status,
+	        user.user_status,
 	        user.user_gender,
 	        user.creat_time,
 	        user.creatBy,
@@ -40,5 +42,74 @@
 	        user.permissions_id,
 	        user_password.password_value
 		from user,user_password where user_login=#{userLogin} and user.password_id = user_password.password_id;
-    </select>     
+    </select>
+
+	<!--更新用户数据 -->
+    <update id="updataUserInfo" parameterType="com.doctor.pojo.User" >
+        update user
+          set
+            user.user_name=#{userName},
+            user.user_age=#{userAge},
+            user.user_id_card=#{userIdCard},
+            user.user_address=#{userAddress}
+          where  user.user_login = #{userLogin}
+    </update>     
+
+    <select id="findByPhone" parameterType="String" resultMap="userinfoMap">
+        select
+	        user.user_id,
+	        user.user_name,
+	        user.user_age,
+	        user.user_id_card,
+	        user.user_phone,
+	        user.user_Email,
+	        user.user_address,
+	        user.user_status,
+	        user.user_gender,
+	        user.creat_time,
+	        user.creatBy,
+	        user.user_login,
+	        user.update_time,
+	        user.updateBy,
+	        user.photo,
+	        user.permissions_id,
+	        user_password.password_value
+		from user,user_password where user_phone=#{phone} and user.password_id = user_password.password_id;
+    </select>
+
+    <select id="findByUserLogin" parameterType="String" resultMap="userinfoMap">
+         select
+	        user.user_id,
+	        user.user_name,
+	        user.user_age,
+	        user.user_id_card,
+	        user.user_phone,
+	        user.user_Email,
+	        user.user_address,
+	        user.user_status,
+	        user.user_gender,
+	        user.creat_time,
+	        user.creatBy,
+	        user.user_login,
+	        user.update_time,
+	        user.updateBy,
+	        user.photo,
+	        user.permissions_id,
+	        user_password.password_value
+		from user,user_password where user_login=#{userLogin}
+    </select>
+
+    <insert id="register" parameterType="com.doctor.pojo.User" >
+        insert into user(user_login,user_phone,user_Email,creat_time)
+        values(#{userLogin},#{userPhone},#{userEmail},#{creatTime})
+    </insert>
+
+    <insert id="insertPassword" parameterType="com.doctor.pojo.User" >
+        insert into user_password(user_id,password_value)
+        values(#{userId},#{Password})
+    </insert>
+
+	<update id="updatePasswordId" parameterType="Integer">
+		update user set password_id = #{passwordId} where user_id = #{userId}
+	</update>
 </mapper>
