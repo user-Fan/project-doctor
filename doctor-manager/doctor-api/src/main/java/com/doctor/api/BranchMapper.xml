@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doctor.api.BranchMapper" >
+  <resultMap id="BaseResultMap" type="com.doctor.pojo.Branch" >
+    <id column="branch_id" property="branchId" jdbcType="INTEGER" />
+    <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="branch_num" property="branchNum" jdbcType="VARCHAR" />
+    <result column="branch_msg" property="branchMsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    branch_id, branch_name, branch_num, branch_msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from branch
+    where branch_id = #{branchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from branch
+    where branch_id = #{branchId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.doctor.pojo.Branch" >
+    insert into branch (branch_id, branch_name, branch_num, 
+      branch_msg)
+    values (#{branchId,jdbcType=INTEGER}, #{branchName,jdbcType=VARCHAR}, #{branchNum,jdbcType=VARCHAR}, 
+      #{branchMsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctor.pojo.Branch" >
+    insert into branch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="branchId != null" >
+        branch_id,
+      </if>
+      <if test="branchName != null" >
+        branch_name,
+      </if>
+      <if test="branchNum != null" >
+        branch_num,
+      </if>
+      <if test="branchMsg != null" >
+        branch_msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="branchId != null" >
+        #{branchId,jdbcType=INTEGER},
+      </if>
+      <if test="branchName != null" >
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchNum != null" >
+        #{branchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="branchMsg != null" >
+        #{branchMsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctor.pojo.Branch" >
+    update branch
+    <set >
+      <if test="branchName != null" >
+        branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchNum != null" >
+        branch_num = #{branchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="branchMsg != null" >
+        branch_msg = #{branchMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where branch_id = #{branchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctor.pojo.Branch" >
+    update branch
+    set branch_name = #{branchName,jdbcType=VARCHAR},
+      branch_num = #{branchNum,jdbcType=VARCHAR},
+      branch_msg = #{branchMsg,jdbcType=VARCHAR}
+    where branch_id = #{branchId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from branch
+  </select>
+</mapper>

@@ -40,5 +40,16 @@
 	        user.permissions_id,
 	        user_password.password_value
 		from user,user_password where user_login=#{userLogin} and user.password_id = user_password.password_id;
-    </select>     
+    </select>
+    <!--更新用户数据 -->
+    <update id="updataUserInfo" parameterType="com.doctor.pojo.User" >
+        update user
+          set
+            user.user_name=#{userName},
+            user.user_age=#{userAge},
+            user.user_id_card=#{userIdCard},
+            user.user_address=#{userAddress}
+          where  user.user_login = #{userLogin}
+    </update>
 </mapper>
+
