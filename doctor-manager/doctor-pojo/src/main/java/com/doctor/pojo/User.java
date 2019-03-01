@@ -38,10 +38,15 @@ public class User {
 	private String photo;
 	private Integer permissionsId;
 	private String Password;
+	private Integer passwordId;
 
 	public User() {
 		super();
 	}
+
+	public Integer getPasswordId(){return passwordId;}
+
+	public void setPasswordId(Integer passwordId){this.passwordId = passwordId;}
 
 	public Integer getUserId() {
 		return userId;
@@ -179,7 +184,7 @@ public class User {
 		Password = password;
 	}
 
-	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail, String userAddress, Integer userStatus, String userGender, Date creatTime, String creatBy, String userLogin, Integer update_time, String updateBy, String photo, Integer permissionsId, String password) {
+	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail, String userAddress, Integer userStatus, String userGender, Date creatTime, String creatBy, String userLogin, Integer update_time, String updateBy, String photo, Integer permissionsId, String password,Integer passwordId) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userAge = userAge;
@@ -197,6 +202,7 @@ public class User {
 		this.photo = photo;
 		this.permissionsId = permissionsId;
 		Password = password;
+		this.passwordId = passwordId;
 	}
 
 	@Override

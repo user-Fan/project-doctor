@@ -19,6 +19,7 @@
         <result column="photo" property="photo"/>
         <result column="permissions_id" property="permissionsId"/>
         <result column="password_value" property="Password"/>
+	  <result column="password_id" property="passwordId"/>
     </resultMap> 
     <select id="getUserByUserLogin" parameterType="String" resultMap="userinfoMap">
         select 
@@ -40,5 +41,64 @@
 	        user.permissions_id,
 	        user_password.password_value
 		from user,user_password where user_login=#{userLogin} and user.password_id = user_password.password_id;
-    </select>     
+    </select>
+
+    <select id="findByPhone" parameterType="String" resultMap="userinfoMap">
+        select
+	        user.user_id,
+	        user.user_name,
+	        user.user_age,
+	        user.user_id_card,
+	        user.user_phone,
+	        user.user_Email,
+	        user.user_address,
+	        user.user_status,
+	        user.user_gender,
+	        user.creat_time,
+	        user.creatBy,
+	        user.user_login,
+	        user.update_time,
+	        user.updateBy,
+	        user.photo,
+	        user.permissions_id,
+	        user_password.password_value
+		from user,user_password where user_phone=#{phone} and user.password_id = user_password.password_id;
+    </select>
+
+    <select id="findByUserLogin" parameterType="String" resultMap="userinfoMap">
+         select
+	        user.user_id,
+	        user.user_name,
+	        user.user_age,
+	        user.user_id_card,
+	        user.user_phone,
+	        user.user_Email,
+	        user.user_address,
+	        user.user_status,
+	        user.user_gender,
+	        user.creat_time,
+	        user.creatBy,
+	        user.user_login,
+	        user.update_time,
+	        user.updateBy,
+	        user.photo,
+	        user.permissions_id,
+	        user_password.password_value
+		from user,user_password where user_login=#{userLogin}
+    </select>
+
+    <insert id="register" parameterType="com.doctor.pojo.User" >
+        insert into user(user_login,user_phone,user_Email,creat_time)
+        values(#{userLogin},#{userPhone},#{userEmail},#{creatTime})
+    </insert>
+
+    <insert id="insertPassword" parameterType="com.doctor.pojo.User" >
+        insert into user_password(user_id,password_value)
+        values(#{userId},#{Password})
+    </insert>
+
+	<update id="updatePasswordId" parameterType="Integer">
+		update user set password_id = #{passwordId} where user_id = #{userId}
+	</update>
+
 </mapper>
