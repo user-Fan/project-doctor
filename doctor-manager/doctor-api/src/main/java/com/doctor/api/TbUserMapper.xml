@@ -43,6 +43,17 @@
 		from user,user_password where user_login=#{userLogin} and user.password_id = user_password.password_id;
     </select>
 
+	<!--更新用户数据 -->
+    <update id="updataUserInfo" parameterType="com.doctor.pojo.User" >
+        update user
+          set
+            user.user_name=#{userName},
+            user.user_age=#{userAge},
+            user.user_id_card=#{userIdCard},
+            user.user_address=#{userAddress}
+          where  user.user_login = #{userLogin}
+    </update>     
+
     <select id="findByPhone" parameterType="String" resultMap="userinfoMap">
         select
 	        user.user_id,
@@ -100,5 +111,3 @@
 	<update id="updatePasswordId" parameterType="Integer">
 		update user set password_id = #{passwordId} where user_id = #{userId}
 	</update>
-
-</mapper>

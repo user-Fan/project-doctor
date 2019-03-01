@@ -1,14 +1,14 @@
 package com.doctor.controller;
 
+
 import com.doctor.Iservice.IUserPasswordSevice;
 import com.doctor.Iservice.IUserService;
-import com.doctor.common.MD5Utill;
 import com.doctor.common.ReturnUtil;
 import com.doctor.pojo.User;
-import com.doctor.pojo.UserPassword;
-import com.doctor.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
@@ -31,23 +31,27 @@ import java.util.List;
 @Api(value = "User", tags = {"User"})
 @Controller
 @Transactional(rollbackFor = {Exception.class})
-public class userController {
+public class UserController {
+
     @Autowired
     private IUserService userService;
     @Autowired
     private IUserPasswordSevice userPasswordSevice;
 
-    public final Logger logger = LoggerFactory.getLogger(userController.class);
+    @Autowired
+    private IUserService UserService;
 
-    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    public final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @RequestMapping("userinfo")
     @ResponseBody
-    public String userinfopage(HttpServletRequest request, String name, Model model) {
+    public User userinfopage(HttpServletRequest request,String name, Model model){
         HttpSession session = request.getSession(false);
         User userinfo = (User) session.getAttribute("userinfo");
-        if (!(userinfo == null) && "".equals(userinfo.getUserName())) {
-            model.addAttribute("userinfo", userinfo);
+        if (!(userinfo==null)&&StringUtils.isNotBlank(userinfo.getUserName())){
+            return userinfo;
         }
-        return "user";
+        return null;
     }
 
     @RequestMapping(value = "/getUserName", method = RequestMethod.GET)
@@ -86,9 +90,9 @@ public class userController {
                 return ReturnUtil.toJSONString(1, "请输入手机号", null);
             } else if (null == user.getUserLogin()) {
                 return ReturnUtil.toJSONString(1, "请输入登录名", null);
-            } else if (null == user.getPassword()){
+            } else if (null == user.getPassword()) {
                 return ReturnUtil.toJSONString(1, "请输入密码", null);
-            }else{
+            } else {
                 return userService.register(user);
             }
         } catch (Exception e) {
@@ -96,4 +100,29 @@ public class userController {
             return ReturnUtil.toJSONString(1, "系统错误", null);
         }
     }
+
+    @RequestMapping("editUserInfo")
+    public String editUserInfo(User user,HttpServletRequest request,String name, Model model){
+        logger.info("editUserInfo||修改User{}", JSONObject.toJSONString(user));
+        //修改信息为空直接返回登陆页面
+        if(user==null){
+            return "loginPage";
+        }
+        HttpSession session = request.getSession(false);
+        //获取session中的用户信息
+        User userinfo = (User) session.getAttribute("userinfo");
+        //判断用户信息是否为空，登录名是否存在
+        if (userinfo!=null&& StringUtils.isNotBlank(userinfo.getUserLogin())){
+            //获取用户修改信息
+            user.setUserLogin(userinfo.getUserLogin());
+            int a =UserService.updataUserInfo(user);
+            //获取修改以后的用户信息
+            User userInfo_  = UserService.getUserUserLogin_v2(userinfo.getUserLogin());
+            session.removeAttribute("userinfo");
+            session.setAttribute("userinfo",userInfo_);
+        }
+        //获取更新之后的用户信息重返回用户页面
+        return "user";
+    }
 }
+
