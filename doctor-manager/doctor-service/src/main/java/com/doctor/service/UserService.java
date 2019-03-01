@@ -1,9 +1,11 @@
 package com.doctor.service;
 
+import com.doctor.api.DoctorMapper;
 import com.doctor.api.TbUserMapper;
 import com.doctor.api.UserPasswordMapper;
 import com.doctor.common.MD5Utill;
 import com.doctor.common.ReturnUtil;
+import com.doctor.pojo.Doctor;
 import com.doctor.pojo.TestUSer;
 import com.doctor.pojo.User;
 import com.doctor.Iservice.IUserService;
@@ -29,6 +31,8 @@ public class UserService implements IUserService {
     TbUserMapper tbUserMapper;
     @Autowired
     UserPasswordMapper userPasswordMapper;
+    @Autowired
+    DoctorMapper doctorMapper;
 
     @Override
     public TestUSer getTestUSer() {
@@ -69,43 +73,67 @@ public class UserService implements IUserService {
     @Override
     public String register(User user) {
         try {
-            //判断手机号和登录名是否存在
-            List<User> users = tbUserMapper.findByPhone(user.getUserPhone());
-            List<User> users1 = tbUserMapper.findByUserLogin(user.getUserLogin());
-            if (users.size() != 0) {
-                return ReturnUtil.toJSONString(1, "手机号已存在", null);
-            } else if (users1.size() != 0) {
-                return ReturnUtil.toJSONString(1, "登录名已存在", null);
-            }
-            //添加创建时间
-            user.setCreatTime(new Date());
-            //接收User信息将密码MD5加密
-            String pw = MD5Utill.md5Encryp(user.getUserLogin(), user.getPassword());
-            //将加密后的密码添加到User类中
-            user.setPassword(pw);
-            //接收User信息添加数据库
-            tbUserMapper.register(user);
-            //根据登录名查询User信息
-            User user1 = tbUserMapper.findByUserLogin(user.getUserLogin()).get(0);
-            //将查询的User1信息的ID添加到User类中
-            user.setUserId(user1.getUserId());
-            //将User1信息添加到password表中
-            tbUserMapper.insertPassword(user);
-            //根据User1的id获取password表中得信息
-            UserPassword userPassword = userPasswordMapper.findByUserId(user1.getUserId());
-            //将passwordId添加到user表中
-            int rel = tbUserMapper.updatePasswordId(user.getUserId(), userPassword.getPasswordId());
-            if (rel >= 1) {
-                return ReturnUtil.toJSONString(0, "注册成功", null);
-            } else {
-                return ReturnUtil.toJSONString(1, "注册失败", null);
+            //判断值为1 用户添加
+            if (user.getUserAge() == 1) {
+                //判断手机号和登录名是否存在
+                String verify = yz(user);
+                if (verify.equals("验证无误")){
+                    //添加用户创建时间
+                    user.setCreatTime(new Date());
+                    //接收User信息将密码MD5加密
+                    String pw = MD5Utill.md5Encryp(user.getUserLogin(), user.getPassword());
+                    //将加密后的密码添加到User类中
+                    user.setPassword(pw);
+                    //接收User信息添加数据库
+                    tbUserMapper.register(user);
+                    //根据登录名查询User信息
+                    User user1 = tbUserMapper.findByUserLogin(user.getUserLogin()).get(0);
+                    //将查询的User1信息的ID添加到User类中
+                    user.setUserId(user1.getUserId());
+                    //将User1信息添加到password表中
+                    tbUserMapper.insertPassword(user);
+                    //根据User1的id获取password表中得信息
+                    UserPassword userPassword = userPasswordMapper.findByUserId(user1.getUserId());
+                    //将passwordId添加到user表中
+                    int rel = tbUserMapper.updatePasswordId(user.getUserId(), userPassword.getPasswordId());
+                    if (rel >= 1) {
+                        return ReturnUtil.toJSONString(0, "注册成功", null);
+                    } else {
+                        return ReturnUtil.toJSONString(1, "注册失败", null);
+                    }
+                }
+            //只为2 医生添加
+            } else if (user.getUserAge() == 2) {
+                //判断手机号和登录名是否存在
+                String verify = yz(user);
+                if (verify.equals("验证无误")) {
+                    //将用户信息添加到Doctor表中
+                    Doctor doctor = new Doctor();
+                    //帐号
+                    doctor.setDoctorAccount(user.getUserLogin());
+                    //邮箱
+                    doctor.setDoctorEmail(user.getUserEmail());
+                    //手机号
+                    doctor.setDoctorPhone(user.getUserPhone());
+                    //密码
+                    String pw = MD5Utill.md5Encryp(user.getUserLogin(), user.getPassword());
+                    doctor.setDoctorPassword(pw);
+                    //添加用户创建时间
+                    doctor.setCreatTime(new Date());
+                    //添加医生数据
+                    int rel = doctorMapper.insertDoctor(doctor);
+                    if (rel >= 1) {
+                        return ReturnUtil.toJSONString(0, "注册成功", null);
+                    } else {
+                        return ReturnUtil.toJSONString(1, "注册失败", null);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnUtil.toJSONString(1, "系统错误", null);
         }
-
-
+        return ReturnUtil.toJSONString(1, "非法操作", null);
     }
 
     @Override
@@ -121,5 +149,25 @@ public class UserService implements IUserService {
     @Override
     public int updatePasswordId(Integer userId, Integer passwordId) {
         return tbUserMapper.updatePasswordId(userId, passwordId);
+    }
+
+    public  String yz(User user){
+        //判断用户手机号和登录名是否存在
+        List<User> users = tbUserMapper.findByPhone(user.getUserPhone());
+        List<User> users1 = tbUserMapper.findByUserLogin(user.getUserLogin());
+        if (users.size() != 0) {
+            return ReturnUtil.toJSONString(1, "手机号已存在", null);
+        } else if (users1.size() != 0) {
+            return ReturnUtil.toJSONString(1, "登录名已存在", null);
+        }
+        //判断医生手机号和登录名是否存在
+        Doctor doctor1 = doctorMapper.findByPhone(user.getUserPhone());
+        Doctor doctor2 = doctorMapper.findByAccount(user.getUserLogin());
+        if (doctor1 != null) {
+            return ReturnUtil.toJSONString(1, "手机号已存在", null);
+        } else if (doctor2 != null) {
+            return ReturnUtil.toJSONString(1, "登录名已存在", null);
+        }
+        return "验证无误";
     }
 }
