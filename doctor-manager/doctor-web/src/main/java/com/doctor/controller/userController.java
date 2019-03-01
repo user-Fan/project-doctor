@@ -48,7 +48,7 @@ public class UserController {
     public User userinfopage(HttpServletRequest request,String name, Model model){
         HttpSession session = request.getSession(false);
         User userinfo = (User) session.getAttribute("userinfo");
-        if (!(userinfo==null)&&StringUtils.isNotBlank(userinfo.getUserName())){
+        if (!(userinfo==null)&&StringUtils.isNotBlank(userinfo.getUserLogin())){
             return userinfo;
         }
         return null;

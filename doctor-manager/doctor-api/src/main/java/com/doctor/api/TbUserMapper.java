@@ -7,7 +7,8 @@ import com.doctor.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface TbUserMapper {
-	    public List<User> getUserByUserLogin(String userLogin);
+
+    public List<User> getUserByUserLogin(String userLogin);
 
 	//更新用户信息
     public int updataUserInfo(User user);

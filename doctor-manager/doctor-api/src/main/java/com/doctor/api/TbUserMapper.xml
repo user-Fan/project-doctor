@@ -20,7 +20,8 @@
         <result column="permissions_id" property="permissionsId"/>
         <result column="password_value" property="Password"/>
 	  <result column="password_id" property="passwordId"/>
-    </resultMap> 
+    </resultMap>
+
     <select id="getUserByUserLogin" parameterType="String" resultMap="userinfoMap">
         select 
 	        user.user_id,
@@ -111,3 +112,4 @@
 	<update id="updatePasswordId" parameterType="Integer">
 		update user set password_id = #{passwordId} where user_id = #{userId}
 	</update>
+</mapper>
