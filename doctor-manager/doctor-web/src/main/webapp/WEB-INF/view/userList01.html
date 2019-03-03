@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inspire - Admin and Dashboard Template</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+</head>
+
+<body>
+
+<div class="page-container">
+    <div class="main-content">
+        <div class="container-fluid">
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header border-bottom">
+                            <h4 class="card-title">用户管理</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatable" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>手机号</th>
+                                        <th>帐号</th>
+                                        <th>身份证号</th>
+                                        <th>年龄</th>
+                                        <th>积分</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table_node">
+                                    <tr class="tr_node">
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="assets/plugins/datatables/jszip.min.js"></script>
+<script src="assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<script src="assets/js/datatables.init.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        $.ajax({
+            url: "/userList",
+            type: "post",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            success: function (success) {
+                var user = JSON.stringify(success);
+                var datas = $.parseJSON(user);
+                var rel = JSON.stringify(datas.code);
+                if (rel == 0) {
+                    var datac = JSON.stringify(datas.data);
+                    var data = JSON.parse(datac);
+                    $('.table_node').empty()
+                    $.each(data, function (i, n) {
+                        if (typeof (data[i].userName) == "undefined") {
+                            data[i].userName = "空";
+                        }
+                        if (typeof (data[i].userPhone) == "undefined") {
+                            data[i].userPhone = "空";
+                        }
+                        if (typeof (data[i].userLogin) == "undefined") {
+                            data[i].userLogin = "空";
+                        }
+                        if (typeof (data[i].userIdCard) == "undefined") {
+                            data[i].userIdCard = "空";
+                        }
+                        if (typeof (data[i].userAge) == "undefined") {
+                            data[i].userAge = "空";
+                        }
+                        if (typeof (data[i].userPoint) == "undefined") {
+                            data[i].userPoint = "空";
+                        }
+                        var rowTr = document.createElement('tr');
+                        rowTr.className = "tr_node";
+                        var str = "<td>" + data[i].userName + "</td>"
+                            + "<td>" + data[i].userPhone + "</td>"
+                            + "<td>" + data[i].userLogin + "</td>"
+                            + "<td>" + data[i].userIdCard + "</td>"
+                            + "<td>" + data[i].userAge + "</td>"
+                            + "<td>" + data[i].userPoint + "</td>"
+                            + "<td> <button type='button' class='btn btn-primary'>编辑</button>    <button type='button' class='btn btn-success' id='"+data[i].userId+"' onclick='qy(" + "&quot;" + data[i].userId + "&quot;" + ");'>启用</button>    <button type='button' class='btn btn-common'>删除</button></td>";
+                        rowTr.innerHTML = str
+                        $(".table_node").append(rowTr);
+                        if (data[i].userStatus==0){
+                            document.getElementById(''+data[i].userId+'').innerHTML = "禁用"
+                        } else if (data[i].userStatus==1){
+                            document.getElementById(''+data[i].userId+'').innerHTML = "启用"
+                        }
+                    });
+                } else {
+                    var msg = JSON.stringify(datas.msg);
+                    alert(msg);
+                }
+            },
+        });
+    }
+
+    function qy(data) {
+        $.ajax({
+            url: "/activateU",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id':data
+            },
+            success: function (success) {
+                if (success == 0){
+                    location=location
+                }
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>

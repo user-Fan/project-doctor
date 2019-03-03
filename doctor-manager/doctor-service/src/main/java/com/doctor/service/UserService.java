@@ -189,6 +189,21 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
+    public List<User> selectUserList() {
+        return tbUserMapper.selectUserList();
+    }
+
+    @Override
+    public User findById(int id) {
+        return tbUserMapper.findById(id);
+    }
+
+    @Override
+    public int updateStatus(int id, int status) {
+        return tbUserMapper.updateStatus(id,status);
+    }
+
 
     //封装手机号登录名验证方法
     public String yz(User user) {

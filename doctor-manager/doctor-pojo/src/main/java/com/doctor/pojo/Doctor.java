@@ -27,7 +27,7 @@ public class Doctor {
 
     private String doctorIntroduce;
 
-    private Integer itemParentNum;
+    private String itemParentNum;
 
     private Integer permissionsId;
 
@@ -137,11 +137,11 @@ public class Doctor {
         this.doctorIntroduce = doctorIntroduce == null ? null : doctorIntroduce.trim();
     }
 
-    public Integer getItemParentNum() {
+    public String getItemParentNum() {
         return itemParentNum;
     }
 
-    public void setItemParentNum(Integer itemParentNum) {
+    public void setItemParentNum(String itemParentNum) {
         this.itemParentNum = itemParentNum;
     }
 
@@ -185,11 +185,11 @@ public class Doctor {
         this.updateby = updateby == null ? null : updateby.trim();
     }
 
-    public Integer getStatus() {
+    public Integer getDoctorStatus() {
         return doctorStatus;
     }
 
-    public void setStatus(Integer status) {
+    public void setDoctorStatus(Integer doctorStatus) {
         this.doctorStatus = doctorStatus;
     }
 }

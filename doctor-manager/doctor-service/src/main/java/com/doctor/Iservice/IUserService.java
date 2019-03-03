@@ -32,4 +32,10 @@ public interface IUserService {
 
 
     String updatePassword(User user, User userinfo);
+
+    List<User> selectUserList();
+
+    User findById(int id);
+
+    int updateStatus(int id, int status);
 }

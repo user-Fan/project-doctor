@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -208,6 +209,45 @@ public class UserController {
             session.removeAttribute("userinfo");
             return 1;
         }catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
+    //用户list
+    @ApiOperation(value = "用户list")
+    @RequestMapping(value = "/userList",method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String userList(){
+        try {
+            List<User> userList = userService.selectUserList();
+            return ReturnUtil.toJSONString(0, "查询成功", userList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    //用户禁用启用
+    @RequestMapping(value = "/activateU", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int activateU(@RequestParam("id") int id) {
+        try {
+            User user = userService.findById(id);
+            int status = 0;
+            if (user.getUserStatus() == 0) {
+                //未激活 需要启用
+                status = 1;
+            } else if (user.getUserStatus() == 1) {
+                //已启用 需要禁用
+                status = 0;
+            }
+            int rel = userService.updateStatus(id, status);
+            if (rel >= 1) {
+                return 0;
+            }
+            return 1;
+        } catch (Exception e) {
             e.printStackTrace();
             return 1;
         }

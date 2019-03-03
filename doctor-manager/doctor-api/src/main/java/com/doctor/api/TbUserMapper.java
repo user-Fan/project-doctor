@@ -22,4 +22,10 @@ public interface TbUserMapper {
     int insertPassword(User user);
 
     int updatePasswordId(@Param("userId") Integer userId,@Param("passwordId")  Integer passwordId);
+
+    List<User> selectUserList();
+
+    User findById(int id);
+
+    int updateStatus(@Param("id")int id, @Param("status")int status);
 }

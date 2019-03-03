@@ -39,6 +39,7 @@ public class User {
 	private Integer permissionsId;
 	private String Password;
 	private Integer passwordId;
+	private Integer userPoint;
 
 	public User() {
 		super();
@@ -182,6 +183,14 @@ public class User {
 
 	public void setPassword(String password) {
 		Password = password;
+	}
+
+	public Integer getUserPoint() {
+		return userPoint;
+	}
+
+	public void setUserPoint(Integer userPoint) {
+		this.userPoint = userPoint;
 	}
 
 	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail, String userAddress, Integer userStatus, String userGender, Date creatTime, String creatBy, String userLogin, Integer update_time, String updateBy, String photo, Integer permissionsId, String password,Integer passwordId) {

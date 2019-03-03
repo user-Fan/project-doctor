@@ -14,7 +14,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="doctor_title" property="doctorTitle" jdbcType="VARCHAR" />
     <result column="doctor_introduce" property="doctorIntroduce" jdbcType="VARCHAR" />
-    <result column="item_parent_num" property="itemParentNum" jdbcType="INTEGER" />
+    <result column="item_parent_num" property="itemParentNum" jdbcType="VARCHAR" />
     <result column="permissions_id" property="permissionsId" jdbcType="INTEGER" />
     <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
     <result column="creatBy" property="creatby" jdbcType="VARCHAR" />
@@ -39,5 +39,17 @@
     insert into doctor(doctor_email,doctor_account,doctor_password,doctor_phone,creat_time)
         values(#{doctorEmail},#{doctorAccount},#{doctorPassword},#{doctorPhone},#{creatTime})
   </insert>
+
+  <select id="selctDoctotList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>from doctor where doctor_status != -1
+  </select>
+
+  <select id="findById" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>from doctor where doctor_id = #{id} and  doctor_status != -1
+  </select>
+
+  <update id="updateStatus" >
+    update doctor set doctor_status = #{status} where doctor_id = #{id}
+  </update>
 
 </mapper>
