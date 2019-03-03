@@ -64,8 +64,9 @@ public class LoginController {
 						return "index";
 					} else {
 						logger.info("账号密码不匹配" + user.toString());
+						response.sendRedirect("/");
+						return "index";
 					}
-					;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					logger.info("md5校验出错" + e.getMessage());
