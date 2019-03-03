@@ -47,10 +47,10 @@ public class UserController {
 
     @RequestMapping("userinfo")
     @ResponseBody
-    public User userinfopage(HttpServletRequest request,String name, Model model){
+    public User userinfopage(HttpServletRequest request, String name, Model model) {
         HttpSession session = request.getSession(false);
         User userinfo = (User) session.getAttribute("userinfo");
-        if (!(userinfo==null)&&StringUtils.isNotBlank(userinfo.getUserLogin())){
+        if (!(userinfo == null) && StringUtils.isNotBlank(userinfo.getUserLogin())) {
             return userinfo;
         }
         return null;
@@ -106,27 +106,111 @@ public class UserController {
     }
 
     @RequestMapping("editUserInfo")
-    public String editUserInfo(User user,HttpServletRequest request,String name, Model model){
+    public String editUserInfo(User user, HttpServletRequest request, String name, Model model) {
         logger.info("editUserInfo||修改User{}", JSONObject.toJSONString(user));
         //修改信息为空直接返回登陆页面
-        if(user==null){
+        if (user == null) {
             return "loginPage";
         }
         HttpSession session = request.getSession(false);
         //获取session中的用户信息
         User userinfo = (User) session.getAttribute("userinfo");
         //判断用户信息是否为空，登录名是否存在
-        if (userinfo!=null&& StringUtils.isNotBlank(userinfo.getUserLogin())){
+        if (userinfo != null && StringUtils.isNotBlank(userinfo.getUserLogin())) {
             //获取用户修改信息
             user.setUserLogin(userinfo.getUserLogin());
-            int a =UserService.updataUserInfo(user);
+            int a = UserService.updataUserInfo(user);
             //获取修改以后的用户信息
-            User userInfo_  = UserService.getUserUserLogin_v2(userinfo.getUserLogin());
+            User userInfo_ = UserService.getUserUserLogin_v2(userinfo.getUserLogin());
             session.removeAttribute("userinfo");
-            session.setAttribute("userinfo",userInfo_);
+            session.setAttribute("userinfo", userInfo_);
         }
         //获取更新之后的用户信息重返回用户页面
         return "user";
+    }
+
+    @ApiOperation(value = "验证手机号")
+    @RequestMapping(value = "/isPhone", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int isPhone(@RequestParam("phones") String phones, HttpServletRequest request) {
+        try {
+            if (phones == "") {
+                return 3;
+            } else {
+                HttpSession session = request.getSession(false);
+                //获取session中的用户信息
+                User userinfo = (User) session.getAttribute("userinfo");
+                if (null==userinfo){
+                    return 5;
+                }
+                if (!phones.equals(userinfo.getUserPhone())) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 4;
+        }
+    }
+    @ApiOperation(value = "修改密码")
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String changePassword(User user, HttpServletRequest request ) {
+        try {
+            if (null == user) {
+                return ReturnUtil.toJSONString(1, "没有修改信息", null);
+            } else if (null == user.getUserPhone()) {
+                return ReturnUtil.toJSONString(1, "请输入手机号", null);
+            } else if (null == user.getPassword()) {
+                return ReturnUtil.toJSONString(1, "请输入密码", null);
+            }
+            HttpSession session = request.getSession(false);
+            //获取session中的用户信息
+            User userinfo = (User) session.getAttribute("userinfo");
+            String rel = userService.updatePassword(user,userinfo);
+            session.removeAttribute("userinfo");
+            return rel;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    @ApiOperation(value = "验证Session")
+    @RequestMapping(value = "/ifSession",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int ifSession(HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession(false);
+            //获取session中的用户信息
+            User userinfo = (User) session.getAttribute("userinfo");
+            if (null == userinfo){
+                return 1;
+            }else {
+                return 0;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
+    @ApiOperation(value = "退出")
+    @RequestMapping(value = "exit",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int exit(HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession(false);
+            //获取session中的用户信息
+            User userinfo = (User) session.getAttribute("userinfo");
+            session.removeAttribute("userinfo");
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
     }
 }
 

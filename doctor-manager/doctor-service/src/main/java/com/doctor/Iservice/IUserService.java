@@ -2,6 +2,7 @@ package com.doctor.Iservice;
 
 import java.util.List;
 
+
 import com.doctor.pojo.TestUSer;
 import com.doctor.pojo.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,4 +29,7 @@ public interface IUserService {
     int insertPassword(User user);
 
     int updatePasswordId(Integer userId,Integer passwordId);
+
+
+    String updatePassword(User user, User userinfo);
 }

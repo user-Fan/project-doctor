@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<div class="app header-default side-nav-dark">
+<div class="app header-default side-nav-dark" id="aaa">
     <div class="layout">
 
         <div class="header navbar">
@@ -214,29 +214,13 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="#">
-                                    <i class="lni-cog"></i>
-                                    <span>Setting</span>
-                                </a>
+                                <a onclick="returnpage('user.html')" style="cursor:pointer;"> <span>我的信息</span></a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="lni-user"></i>
-                                    <span>Profile</span>
-                                </a>
+                                <a onclick="returnpage('change.html')" style="cursor:pointer;"> <span>修改密码</span></a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="lni-envelope"></i>
-                                    <span>Inbox</span>
-                                    <span class="badge badge-pill badge-primary pull-right">2</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-lock"></i>
-                                    <span>Logout</span>
-                                </a>
+                                <a onclick="exit()"> <span>退出登录</span></a>
                             </li>
                         </ul>
                     </li>
@@ -371,7 +355,7 @@
                                 <a onclick="returnpage('user.html')" style="cursor:pointer;">我的信息</a>
                             </li>
                             <li>
-                                <a href="data-table.html">修改密码</a>
+                                <a onclick="returnpage('change.html')" style="cursor:pointer;">修改密码</a>
                             </li>
                         </ul>
                     </li>
@@ -402,9 +386,8 @@
         </div>
 
 
-
-        <iframe   id = "getPage" src = "demo.html" style="position: relative;overflow: hidden;"   frameborder="0" scrolling="auto" marginheight="0" marginwidth="0" height="1000" width="100%"></iframe>
-
+        <iframe id="getPage" src="demo.html" style="position: relative;overflow: hidden;" frameborder="0"
+                scrolling="auto" marginheight="0" marginwidth="0" height="1000" width="100%"></iframe>
 
 
     </div>
@@ -414,11 +397,6 @@
     <div class="loader" id="loader-1"></div>
 </div>
 
-<script type="text/javascript">
-    function returnpage(srcmgs){
-        $('#getPage').attr('src', srcmgs);
-    }
-</script>
 
 <script src="assets/js/jquery-min.js"></script>
 <script src="assets/js/popper.min.js"></script>
@@ -429,6 +407,59 @@
 <script src="assets/plugins/morris/morris.min.js"></script>
 <script src="assets/plugins/raphael/raphael-min.js"></script>
 <script src="assets/js/dashborad1.js"></script>
+<script type="text/javascript">
+    function ss() {
+        $('#aaa').click(function () {
+            $.ajax({
+                url: '/ifSession',
+                type: 'get',
+                success: function (success) {
+                    if (success == 1) {
+                        //alert(success);
+                        window.location.href = "loginPage";
+                    }
+                }
+            })
+        });
+
+    }
+
+    window.onload = function () {
+        //show_sub();
+        ss();
+    }
+
+    /* function show_sub() {
+         $.ajax({
+             url: '/ifSession',
+             type: 'get',
+             success: function (success) {
+                 if (success == 1) {
+                     alert(success);
+                     window.location.href="loginPage";
+                 }
+             }
+         })
+     }*/
+
+    function returnpage(srcmgs) {
+        $('#getPage').attr('src', srcmgs);
+
+    }
+
+    function exit() {
+        $.ajax({
+            url: '/exit',
+            type: 'get',
+            success: function (success) {
+                if (success == 1) {
+                    //alert(success);
+                    window.location.href = "loginPage";
+                }
+            }
+        })
+    }
+</script>
 </body>
 
 

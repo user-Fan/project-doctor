@@ -89,7 +89,7 @@ public class UserService implements IUserService {
             if (user.getUserAge() == 1) {
                 //判断手机号和登录名是否存在
                 String verify = yz(user);
-                if (verify.equals("验证无误")){
+                if (verify.equals("验证无误")) {
                     //添加用户创建时间
                     user.setCreatTime(new Date());
                     //接收User信息将密码MD5加密
@@ -114,7 +114,7 @@ public class UserService implements IUserService {
                         return ReturnUtil.toJSONString(1, "注册失败", null);
                     }
                 }
-            //只为2 医生添加
+                //只为2 医生添加
             } else if (user.getUserAge() == 2) {
                 //判断手机号和登录名是否存在
                 String verify = yz(user);
@@ -163,7 +163,35 @@ public class UserService implements IUserService {
         return tbUserMapper.updatePasswordId(userId, passwordId);
     }
 
-    public  String yz(User user){
+    @Override
+    public String updatePassword(User user, User userinfo) {
+        try {
+            if (!user.getUserPhone().equals(userinfo.getUserPhone())) {
+                return ReturnUtil.toJSONString(1, "手机号不相同", null);
+            } else {
+                String pw = MD5Utill.md5Encryp(userinfo.getUserLogin(), user.getPassword());
+                if (pw.equals(userinfo.getPassword())) {
+                    return ReturnUtil.toJSONString(1, "新密码不能和旧密码一样", null);
+                } else {
+                    UserPassword userPassword = new UserPassword();
+                    userPassword.setUserId(userinfo.getUserId());
+                    userPassword.setPasswordValue(pw);
+                    int rel = userPasswordMapper.updatePassword(userPassword);
+                    if (rel == 1) {
+                        return ReturnUtil.toJSONString(0, "修改密码成功", null);
+                    }
+                    return ReturnUtil.toJSONString(1, "修改密码失败", null);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+
+    //封装手机号登录名验证方法
+    public String yz(User user) {
         //判断用户手机号和登录名是否存在
         List<User> users = tbUserMapper.findByPhone(user.getUserPhone());
         List<User> users1 = tbUserMapper.findByUserLogin(user.getUserLogin());
