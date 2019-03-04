@@ -37,52 +37,55 @@
 
 <body class="inner-container">
 
-<iframe name="form" id="form" style="display: none"><p>注册成功</p></iframe>
-<div class="page-container">
+<div class="app header-default side-nav-dark">
+    <div class="layout">
+        <div class="page-container">
 
 
-    <div class="main-content">
-        <div class="container-fluid">
+            <div class="main-content">
+                <div class="container-fluid">
 
-            <div class="breadcrumb-wrapper row" id="addBranch">
+                    <div class="breadcrumb-wrapper row" id="addBranch">
 
-            </div>
+                    </div>
 
-        </div>
-        <div class="container-fluid">
-            <div class="row" id="docterLists">
-                <div class="col-md-6 col-lg-6 col-xlg-4">
-                    <div class="card card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-4 col-lg-3 text-center">
-                                <a href="#"><img src="assets/img/users/1.jpg" alt="user"
-                                                 class="img-circle img-fluid"></a>
-                            </div>
-                            <div class="col-md-8 col-lg-9">
-                                <h3 class="box-title">系统管理员提示您</h3>
-                                <small>感谢使用</small>
-                                <address class="m-0">
-                                    <p class="m-0">所有医生列表</p>
-                                    <abbr title="Phone">P:</abbr> 请选择你要查看的医生
-                                </address>
+                </div>
+                <div class="container-fluid">
+                    <div class="row" id="docterLists">
+                        <div class="col-md-6 col-lg-6 col-xlg-4">
+                            <div class="card card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-lg-3 text-center">
+                                        <a href="#"><img src="assets/img/users/1.jpg" alt="user"
+                                                         class="img-circle img-fluid"></a>
+                                    </div>
+                                    <div class="col-md-8 col-lg-9">
+                                        <h3 class="box-title">系统管理员提示您</h3>
+                                        <small>感谢使用</small>
+                                        <address class="m-0">
+                                            <p class="m-0">所有医生列表</p>
+                                            <abbr title="Phone">P:</abbr> 请选择你要查看的医生
+                                        </address>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xlg-4">
-                    <div class="card card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-4 col-lg-3 text-center">
-                                <a href="#"><img src="assets/img/users/2.jpg" alt="user"
-                                                 class="img-circle img-fluid"></a>
-                            </div>
-                            <div class="col-md-8 col-lg-9">
-                                <h3 class="box-title">姓名栏目</h3>
-                                <small>性别：年龄</small>
-                                <address class="m-0">
-                                    <p class="m-0">医生介绍
-                                        <abbr title="Phone">P:</abbr> 电话号码
-                                </address>
+                        <div class="col-md-6 col-lg-6 col-xlg-4">
+                            <div class="card card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-lg-3 text-center">
+                                        <a href="#"><img src="assets/img/users/2.jpg" alt="user"
+                                                         class="img-circle img-fluid"></a>
+                                    </div>
+                                    <div class="col-md-8 col-lg-9">
+                                        <h3 class="box-title">姓名栏目</h3>
+                                        <small>性别：年龄</small>
+                                        <address class="m-0">
+                                            <p class="m-0">医生介绍
+                                                <abbr title="Phone">P:</abbr> 电话号码
+                                        </address>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,7 +94,6 @@
         </div>
     </div>
 </div>
-
 <script src="assets/js/jquery-min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -111,7 +113,6 @@
         url: "/getAllBranchItems",
         success: function (data) {
             var json = data;
-            //alert(JSON.stringify(json));
             for (var key in json) {
                 var uuid = Math.random().toString(36).substr(2);
                 var head = "<div class='col-sm-1'><div class='dropdown m-b-10'><button class='btn btn-common dropdown-toggle' type='button' id='" + uuid + "' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + key + "</button><div class='dropdown-menu' aria-labelledby='" + uuid + "'>";
@@ -127,7 +128,7 @@
 
     function docterList(msg) {
         $("#docterLists").empty();
-        $("#docterLists").append("<div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><a href='#'><img src='assets/img/users/1.jpg' alt='user'class='img-circle img-fluid'></a></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>系统管理员提示您</h3><small>感谢使用</small><address class='m-0'><p class='m-0'>所有医生列表</p><abbr title='Phone'>P:</abbr> 请选择你要查看的医生</address></div></div></div></div><div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><a href='#'><img src='assets/img/users/2.jpg' alt='user'class='img-circle img-fluid'></a></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>姓名栏目</h3><small>性别：年龄</small><address class='m-0'><p class='m-0'>医生介绍<abbr title='Phone'>P:</abbr> 电话号码</address></div></div></div></div>");
+        $("#docterLists").append("<div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><a href='#'><img src='assets/img/users/1.jpg'  alt='user'class='img-circle img-fluid'></a></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>系统管理员提示您</h3><small>感谢使用</small><address class='m-0'><p class='m-0'>所有医生列表</p><abbr title='Phone'>P:</abbr> 请选择你要查看的医生</address></div></div></div></div><div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><a href='#'><img src='assets/img/users/2.jpg' alt='user'class='img-circle img-fluid'></a></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>姓名栏目</h3><small>性别：年龄</small><address class='m-0'><p class='m-0'>医生介绍<abbr title='Phone'>P:</abbr> 电话号码</address></div></div></div></div>");
 
         $.ajax
         ({
@@ -138,25 +139,54 @@
             data: {"itemParentNum": msg},
             success: function (data) {
                 var json = data;
-                alert(JSON.stringify(json));
                 for (var i = 0; i < json.length; i++) {
-                    alert(JSON.stringify(json[i]));
-                    $("#docterLists").append("<div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><div class='text-center'><img type='button' src='assets/img/users/1.jpg' class='img-circle img-fluid'data-toggle='modal' data-target='.bs-example-modal-center'></button></div><div class='modal fade bs-example-modal-center' tabindex='-1' role='dialog'aria-labelledby='mySmallModalLabel' aria-hidden='true' style='display: none;'><div class='modal-dialog modal-dialog-centered'><div class='modal-content'><div class='modal-header'><h5 class='modal-title'>创建预约单</h5><button type='button' class='close'data-dismiss='modal' aria-hidden='true'>×</button></div><div class='modal-body'><form class='forms-sample' action='/createOrder'><div class='form-group row'><label for='exampleInputUsername2'class='col-sm-3 col-form-label'>医生编号</label><div class='col-sm-9'><input type='text' class='form-control' name='doctorId'readonly='readonly' value="+json[i].doctorId+"></div></div><div class='form-group row'><label for='exampleInputEmail2'class='col-sm-3 col-form-label'>就诊时间</label><div class='col-sm-9'><input type='date' class='form-control' name='endTime'></div></div><div class='form-group row'><label for='exampleInputMobile'class='col-sm-3 col-form-label'>挂号原因</label><div class='col-sm-9'><input type='text' class='form-control' name='putReason'placeholder='你的挂号原因'></div></div><button type='submit' class='btn btn-common mr-3' id='ddd'>创建订单</button><buttonclass='btn btn-light'>返回</button></form></div></div></div></div></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>"+ json[i].doctorName + "</h3><small>" +" 性别："+ json[i].denger+"</small><small>"+" 年龄：" + json[i].age + "</small><small>" +" 职称："+ json[i].doctorTitle + "</small><address class='m-0'><p class='m-0'>简介:</p><p class='m-0'>" + json[i].doctorIntroduce + "</p><abbr title='Phone'>电话:</abbr>"+json[i].doctorPhone + "</address></div></div></div></div>"
+                    $("#docterLists").append("<div class='col-md-6 col-lg-6 col-xlg-4'><div class='card card-body'><div class='row align-items-center'><div class='col-md-4 col-lg-3 text-center'><div class='text-center'><img type='button' src='assets/img/users/1.jpg' class='img-circle img-fluid'data-toggle='modal' data-target='.bs-example-modal-center' onclick='changeval("+"&quot;" + json[i].doctorId + "&quot;"+")'></button></div><div class='modal fade bs-example-modal-center' tabindex='-1' role='dialog'aria-labelledby='mySmallModalLabel' aria-hidden='true' style='display: none;'><div class='modal-dialog modal-dialog-centered'><div class='modal-content'><div class='modal-header'><h5 class='modal-title'>创建预约单</h5><button type='button' class='close'data-dismiss='modal' aria-hidden='true'>×</button></div><div class='modal-body'><form class='forms-sample' id='createOrder' ><div class='form-group row'><label for='exampleInputUsername2'class='col-sm-3 col-form-label'>医生编号</label><div class='col-sm-9'><input type='text' class='form-control' name='doctorId'readonly='readonly' value="+json[i].doctorId+" id = 'doctorIdAAA'></div></div><div class='form-group row'><label for='exampleInputEmail2'class='col-sm-3 col-form-label'>就诊时间</label><div class='col-sm-9'><input type='date' class='form-control' name='endTime'></div></div><div class='form-group row'><label for='exampleInputMobile'class='col-sm-3 col-form-label'>挂号原因</label><div class='col-sm-9'><input type='text' class='form-control' name='putReason'placeholder='你的挂号原因'></div></div><button type='button' class='btn btn-common mr-3' onclick='createOrderAAA()'>创建订单</button><button class='btn btn-light'>返回</button></form></div></div></div></div></div><div class='col-md-8 col-lg-9'><h3 class='box-title'>"+ json[i].doctorName + "</h3><small>" +" 性别："+ json[i].denger+"</small><small>"+" 年龄：" + json[i].age + "</small><small>" +" 职称："+ json[i].doctorTitle + "</small><address class='m-0'><p class='m-0'>简介:</p><p class='m-0'>" + json[i].doctorIntroduce + "</p><abbr title='Phone'>电话:</abbr>"+json[i].doctorPhone + "</address></div></div></div></div>"
                     );
                 }
             }
         });
     }
 
-    $(document).ready(function () {
-        $('#ddd').click();
-        $('#form').load(function () {
-            var text = $(this).contents().find("body").text();
-            var j = $.parseJSON(text);
-           alert(JSON.stringify(j));
-        });
-    })
+    function changeval(value) {
+        alert(value);
+        $("#doctorIdAAA").attr({"value":value});
+    }
 
+
+    function createOrderAAA(){
+        var arry = $("#createOrder").serializeArray();//序列化表单
+        var obj = {};//分配内存空间
+        for (var i = 0; i < arry.length; i++) {//数据类型为"自定义类的字段名=数据"后台会自动对数据进行匹配
+            obj[arry[i].name] = arry[i].value;
+        }
+        var date = JSON.stringify(obj);
+        $.ajax
+        ({
+            cache: false,
+            async: false,
+            dataType: 'json', type: 'post',
+            url: "/createOrder",
+            data: {"order": date},
+            success: function (data) {
+              if(data==0){
+                  alert("订单创建失败");
+                  eco_refresh123();
+              }else{
+                  alert("订单创建成功");
+                  eco_refresh123();
+              }
+            },error:function () {
+                alert("订单创建成功");
+                eco_refresh123();
+            }
+        });
+    }
+    function eco_refresh123(){
+        var _body = window.parent;
+        var _iframe1=_body.document.getElementById('getPage');
+        window.onbeforeunload=function(){};
+        _iframe1.contentWindow.location.reload(true);
+    }
 
 </script>
 </body>

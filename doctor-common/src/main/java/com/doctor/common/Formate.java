@@ -18,11 +18,17 @@ public class Formate {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
-            date = sdf.parse("2008-08-08");
+            date = sdf.parse(time);
             return date;
         }catch (Exception e){
             e.getMessage();
         }
         return date;
+    }
+
+    public static String getStringDate(Date currentTime) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = formatter.format(currentTime);
+        return dateString;
     }
 }

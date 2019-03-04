@@ -31,6 +31,16 @@ public class Order {
 
     private Integer orderPoint;
 
+    private String doctorName;
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
     public Integer getId() {
         return id;
     }

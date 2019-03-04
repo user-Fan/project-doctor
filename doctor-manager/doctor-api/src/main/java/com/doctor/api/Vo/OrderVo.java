@@ -1,6 +1,17 @@
 package com.doctor.api.Vo;
 
 public class OrderVo {
+
+    private String doctorName;
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
     private Integer id;
 
     private Integer userId;

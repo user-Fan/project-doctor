@@ -28,4 +28,7 @@ public interface IUserService {
     int insertPassword(User user);
 
     int updatePasswordId(Integer userId,Integer passwordId);
+
+    int updateUserPoint(Integer serPoint,Integer id);
+
 }

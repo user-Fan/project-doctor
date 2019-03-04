@@ -16,6 +16,7 @@
     <result column="pay" property="pay" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="order_point" property="orderPoint" jdbcType="INTEGER" />
+    <result column="doctor_name" property="doctorName" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, doctor_id, order_number, put_time, out_time, begin_time, end_time, put_reason, 
@@ -134,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.doctor.pojo.Order" >
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.doctor.pojo.Order" >
     update order
     <set >
       <if test="userId != null" >
@@ -178,27 +179,44 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </update>-->
+
   <update id="updateByPrimaryKey" parameterType="com.doctor.pojo.Order" >
-    update order
-    set user_id = #{userId,jdbcType=INTEGER},
-      doctor_id = #{doctorId,jdbcType=INTEGER},
-      order_number = #{orderNumber,jdbcType=VARCHAR},
-      put_time = #{putTime,jdbcType=TIMESTAMP},
-      out_time = #{outTime,jdbcType=TIMESTAMP},
-      begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      put_reason = #{putReason,jdbcType=VARCHAR},
-      out_reason = #{outReason,jdbcType=VARCHAR},
-      remind = #{remind,jdbcType=INTEGER},
-      pay = #{pay,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      order_point = #{orderPoint,jdbcType=INTEGER}
+    update order_user
+    set
+    <if test="orderPoint != null" >
+      order_user.order_point = #{orderPoint,jdbcType=INTEGER},
+    </if>
+    <if test="pay != null" >
+      order_user.pay= #{pay,jdbcType=INTEGER}
+    </if>
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
   <insert id="insert" parameterType="com.doctor.pojo.Order">
-    insert into `order` ( user_id,doctor_id,begin_time,end_time,put_reason)
+    insert into order_user ( user_id,doctor_id,begin_time,end_time,put_reason)
     values ( #{userId,jdbcType=INTEGER},#{doctorId,jdbcType=INTEGER},#{beginTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{putReason,jdbcType=VARCHAR})
   </insert>
+
+  <select id="getAllOrderByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    doctor.doctor_name,
+    order_user.begin_time,
+    order_user.end_time,
+    order_user.put_reason,
+    order_user.id
+    from order_user ,doctor where 1=1 and user_id=#{userId,jdbcType=INTEGER} and order_user.doctor_id = doctor.doctor_id and order_user.pay=0;
+  </select>
+
+  <select id="getPayOrderByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    doctor.doctor_name,
+    order_user.begin_time,
+    order_user.end_time,
+    order_user.put_reason,
+    order_user.id
+    from order_user ,doctor where 1=1 and user_id=#{userId,jdbcType=INTEGER} and order_user.doctor_id = doctor.doctor_id and order_user.pay=1;
+  </select>
+
 </mapper>

@@ -209,4 +209,9 @@ public class UserService implements IUserService {
         }
         return null;
     }
+
+    @Override
+    public int updateUserPoint(Integer serPoint,Integer id) {
+      return   tbUserMapper.updatePoint(serPoint,id);
+    }
 }
