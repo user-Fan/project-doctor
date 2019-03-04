@@ -196,12 +196,44 @@ public class UserService implements IUserService {
 
     @Override
     public User findById(int id) {
-        return tbUserMapper.findById(id);
+        User user = tbUserMapper.findById(id);
+        if (user.getUserGender().equals("0")){
+            user.setUserGender("保密");
+        }else if (user.getUserGender().equals("1")){
+            user.setUserGender("男");
+        }else if (user.getUserGender().equals("2")){
+            user.setUserGender("女");
+        }
+        return user;
     }
 
     @Override
     public int updateStatus(int id, int status) {
         return tbUserMapper.updateStatus(id,status);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        if(!user.getUserGender().equals("")){
+            if (user.getUserGender().equals("保密")){
+                user.setUserGender("0");
+            }else if (user.getUserGender().equals("男")){
+                user.setUserGender("1");
+            }else if (user.getUserGender().equals("nv")){
+                user.setUserGender("2");
+            }
+        }
+        return tbUserMapper.updateUser(user);
+    }
+
+    @Override
+    public int deleteUser(int id) {
+        try {
+            return tbUserMapper.deleteUser(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 

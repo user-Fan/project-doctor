@@ -38,4 +38,8 @@ public interface IUserService {
     User findById(int id);
 
     int updateStatus(int id, int status);
+
+    int updateUser(User user);
+
+    int deleteUser(int id);
 }

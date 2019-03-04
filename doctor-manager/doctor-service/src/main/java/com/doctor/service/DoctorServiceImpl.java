@@ -30,13 +30,38 @@ public class DoctorServiceImpl implements IDoctorService {
     }
 
     @Override
-    public Doctor findById(Integer id){
-        return doctorMapper.findById(id);
+    public Doctor findById(Integer id) {
+        Doctor doctor = doctorMapper.findById(id);
+        if (doctor.getDenger().equals("0")) {
+            doctor.setDenger("保密");
+        } else if (doctor.getDenger().equals("1")) {
+            doctor.setDenger("男");
+        } else if (doctor.getDenger().equals("2")) {
+            doctor.setDenger("女");
+        }
+        return doctor;
     }
 
     @Override
-    public int updateStatus(int id ,int status) {
-        return doctorMapper.updateStatus(id,status);
+    public int updateStatus(int id, int status) {
+        return doctorMapper.updateStatus(id, status);
+    }
+
+    @Override
+    public int updateDoctor(Doctor doctor){
+        if (doctor.getDenger().equals("保密")){
+            doctor.setDenger("0");
+        }else if(doctor.getDenger().equals("男")){
+            doctor.setDenger("1");
+        }else if(doctor.getDenger().equals("女")){
+            doctor.setDenger("2");
+        }
+        return doctorMapper.updateDoctor(doctor);
+    }
+
+    @Override
+    public int deleteDoctor(int id){
+        return doctorMapper.deleteDoctor(id);
     }
 
 }

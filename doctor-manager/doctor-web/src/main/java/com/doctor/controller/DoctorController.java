@@ -73,4 +73,58 @@ public class DoctorController {
         }
     }
 
+    //医生详情
+    @ApiOperation(value = "医生详情")
+    @RequestMapping("/findByDId")
+    @ResponseBody
+    public String findByDId(@RequestParam("id") int id) {
+        try {
+            Doctor doctor = doctorService.findById(id);
+            if (null == doctor){
+                return ReturnUtil.toJSONString(1, "查询失败", null);
+            }
+            return ReturnUtil.toJSONString(0, "查询成功", doctor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    //编辑医生信息
+    @ApiOperation(value = "医生详情")
+    @RequestMapping(value = "/updateDoctor", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String updateDoctor(Doctor doctor){
+        System.out.println(doctor.toString());
+        try {
+            if (null == doctor){
+                return ReturnUtil.toJSONString(1, "没有医生信息", null);
+            }
+                int rel = doctorService.updateDoctor(doctor);
+                if (rel == 0){
+                    return ReturnUtil.toJSONString(1, "修改医生信息失败", null);
+                }
+                return ReturnUtil.toJSONString(0, "修改成功", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    //删除医生
+    @ApiOperation(value = "删除医生")
+    @RequestMapping(value = "/deleteDoctor", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int deleteDoctor(@RequestParam("id") int id){
+        try {
+            int rel = doctorService.deleteDoctor(id);
+            if (rel == 0){
+                return 1;
+            }
+            return 0;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
+    }
 }

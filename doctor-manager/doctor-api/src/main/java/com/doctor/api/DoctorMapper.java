@@ -19,4 +19,8 @@ public interface DoctorMapper {
     Doctor findById(Integer id);
 
     int updateStatus(@Param("id")int id,@Param("status")int status);
+
+    int updateDoctor(Doctor doctor);
+
+    int deleteDoctor(int id);
 }

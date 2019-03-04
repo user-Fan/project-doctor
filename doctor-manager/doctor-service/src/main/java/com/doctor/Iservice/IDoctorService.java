@@ -15,4 +15,8 @@ public interface IDoctorService {
     Doctor findById(Integer findById);
 
     int updateStatus(int id ,int status);
+
+    int updateDoctor(Doctor doctor);
+
+    int deleteDoctor(int id);
 }

@@ -161,10 +161,6 @@ public class Doctor {
         this.creatTime = creatTime;
     }
 
-    public String getCreatby() {
-        return creatby;
-    }
-
     public void setCreatby(String creatby) {
         this.creatby = creatby == null ? null : creatby.trim();
     }
@@ -191,5 +187,31 @@ public class Doctor {
 
     public void setDoctorStatus(Integer doctorStatus) {
         this.doctorStatus = doctorStatus;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "doctorId=" + doctorId +
+                ", doctorEmail='" + doctorEmail + '\'' +
+                ", doctorAccount='" + doctorAccount + '\'' +
+                ", doctorPassword='" + doctorPassword + '\'' +
+                ", doctorName='" + doctorName + '\'' +
+                ", doctorPhone='" + doctorPhone + '\'' +
+                ", doctorCardId='" + doctorCardId + '\'' +
+                ", denger='" + denger + '\'' +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", doctorTitle='" + doctorTitle + '\'' +
+                ", doctorIntroduce='" + doctorIntroduce + '\'' +
+                ", itemParentNum='" + itemParentNum + '\'' +
+                ", permissionsId=" + permissionsId +
+                ", creatTime=" + creatTime +
+                ", creatby='" + creatby + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateby='" + updateby + '\'' +
+                ", doctorStatus=" + doctorStatus +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.doctor.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserPasswordSevice;
 import com.doctor.Iservice.IUserService;
@@ -7,7 +8,6 @@ import com.doctor.common.ReturnUtil;
 import com.doctor.pojo.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -252,5 +250,60 @@ public class UserController {
             return 1;
         }
     }
+
+    //用户详情
+    @ApiOperation(value = "用户详情")
+    @RequestMapping("/findByUId")
+    @ResponseBody
+    public String findByUId(@RequestParam("id") int id){
+        try {
+            User user = userService.findById(id);
+            if (null == user){
+                return ReturnUtil.toJSONString(1, "查询失败", null);
+            }
+            return ReturnUtil.toJSONString(0, "查询成功", user);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    //编辑用户
+    @ApiOperation(value = "编辑用户")
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String updateUser(User user){
+        try {
+            if (null == user){
+                return ReturnUtil.toJSONString(1, "用户信息为空", null);
+            }
+            int rel = userService.updateUser(user);
+            if (rel == 0){
+                return ReturnUtil.toJSONString(1, "修改失败", null);
+            }
+            return ReturnUtil.toJSONString(0, "修改成功", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
+    }
+
+    //删除用户
+    @ApiOperation(value = "删除用户")
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public int deleteUser(@RequestParam("id") int id){
+        try {
+            int rel = userService.deleteUser(id);
+            if (rel == 0){
+                return 1;
+            }
+            return 0;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
 }
 

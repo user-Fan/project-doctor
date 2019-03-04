@@ -135,4 +135,66 @@
     <update id="updateStatus" >
         update user set user_status = #{status} where user_id = #{id}
     </update>
+
+    <update id="updateUser" parameterType="com.doctor.pojo.User" >
+        update user
+        <set >
+            <if test="userName != null and userName !=''" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userAge != null and userAge !=''" >
+                user_age = #{userAge,jdbcType=INTEGER},
+            </if>
+            <if test="userIdCard != null and userIdCard !=''" >
+                user_id_card = #{userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null and userPhone !=''" >
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null and userEmail !=''" >
+                user_Email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userAddress != null and userAddress !=''" >
+                user_address = #{userAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null and userStatus !=''" >
+                user_status = #{userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="userGender != null and userGender !=''" >
+                user_gender = #{userGender,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null and creatTime !=''" >
+                creat_time = #{creatTime,jdbcType=DATE},
+            </if>
+            <if test="creatBy != null and creatBy !=''" >
+                creatBy = #{creatBy,jdbcType=VARCHAR},
+            </if>
+            <if test="userLogin != null and userLogin !=''" >
+                user_login = #{userLogin,jdbcType=VARCHAR},
+            </if>
+            <if test="update_time != null and update_time !=''" >
+                update_time = #{update_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null and updateBy !=''" >
+                updateBy = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null and photo !=''" >
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionsId != null and permissionsId !=''" >
+                permissions_id = #{permissionsId,jdbcType=INTEGER},
+            </if>
+            <if test="passwordId != null and passwordId !=''" >
+                password_id = #{passwordId,jdbcType=INTEGER},
+            </if>
+            <if test="userPoint != null and userPoint !=''" >
+                user_point = #{userPoint,jdbcType=INTEGER},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteUser">
+        update user set user_status = -1 where user_id = #{id}
+    </update>
 </mapper>
