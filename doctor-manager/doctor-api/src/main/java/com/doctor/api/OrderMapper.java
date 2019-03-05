@@ -35,4 +35,5 @@ public interface OrderMapper {
     //查询用户所有订单
     List <Order> orderLoge(Integer userId);
 
+    List<Order> selectOrderList();
 }

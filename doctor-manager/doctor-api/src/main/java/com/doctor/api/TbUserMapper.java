@@ -34,4 +34,6 @@ public interface TbUserMapper {
     int updateUser(User user);
 
     int deleteUser(int id);
+
+    User findByIds(Integer userId);
 }

@@ -180,19 +180,19 @@ public class UserController {
     @ApiOperation(value = "验证Session")
     @RequestMapping(value = "/ifSession",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public int ifSession(HttpServletRequest request){
+    public String ifSession(HttpServletRequest request){
         try {
             HttpSession session = request.getSession(false);
             //获取session中的用户信息
-          session.getAttribute("userinfo");
-            if (null == session){
-                return 1;
+            User userinfo = (User) session.getAttribute("userinfo");
+            if (null == userinfo){
+                return ReturnUtil.toJSONString(1, "session无效", null);
             }else {
-                return 0;
+                return ReturnUtil.toJSONString(0, "session有效", userinfo);
             }
         }catch (Exception e){
             e.printStackTrace();
-            return 1;
+            return ReturnUtil.toJSONString(1, "系统错误", null);
         }
     }
 
