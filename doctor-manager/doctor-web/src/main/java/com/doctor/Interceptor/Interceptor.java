@@ -77,8 +77,9 @@ public class Interceptor implements HandlerInterceptor {
 										logger.info("进入拦截器-----------医生登陆");
 										return true;
 									}else if("管理员".equals(session.getAttribute("type"))){
-										response.sendRedirect("/index");
+										response.sendRedirect("/index3");
 										logger.info("进入拦截器-----------登陆");
+										return true;
 									}
 									return true;
 								}
@@ -117,7 +118,8 @@ public class Interceptor implements HandlerInterceptor {
 		}else if ("医生".equals(type)){
 			realPassword = doctorService.findByAccount(userLogin).getDoctorPassword();
 		}else if ("管理员".equals(type)){
-		/*	realPassword = userService.getDoctorUserLogin(userLogin).get(0).getPassword();*/
+			realPassword = userService.getUserUserLogin(userLogin).get(0).getPassword();
+			return realPassword;
 		}
 		return realPassword;
 	}

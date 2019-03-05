@@ -59,32 +59,41 @@ public class LoginController {
         return "index2";
     }
 
+    @RequestMapping("/index3")
+    public String index3() {
+        logger.info("进入TestController----------跳转index.html2");
+        return "index3";
+    }
+
     @RequestMapping("/login")
     public String login(LoginVo user, Model model, HttpServletRequest request, HttpServletResponse response) {
         logger.info("获得前台提交用户登陆信息" + user.toString());
-        if (user ==null || StringUtils.isBlank(user.getType())) {
+        if (user == null || StringUtils.isBlank(user.getType())) {
             return "login";
         }
         String type = user.getType();
 
         if ("医生".equals(type)) {
-          return   doctorLogin.Login( user, model,  request,  response);
-        } else if ("guan".equals(type)) {
-
+            return doctorLogin.Login(user, model, request, response);
         }
         List<User> users = UserService.getUserUserLogin(user.getUserLogin());
         logger.info(String.valueOf(users.size()));
+
         if (users != null && users.size() > 0) {
 
             for (User user_ : users) {
                 try {
                     logger.info("进入校验");
-                    if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword())) {
+                    if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword()) && user_.getUserStatus() == 1) {
                         logger.info("登陆成功---用户为-------" + user_.getUserName());
                         //cookie,和session中设置用户信息
-                        setUserInfo(user_, request, response,type);
+                        setUserInfo(user_, request, response, type);
                         response.sendRedirect("/");
                         return "index";
+                    } else if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword()) && user_.getUserStatus() == 2) {
+                        setUserInfo(user_, request, response, "管理员");
+                        response.sendRedirect("/");
+                        return "index3";
                     } else {
                         logger.info("账号密码不匹配" + user.toString());
                         response.sendRedirect("/");
@@ -106,7 +115,7 @@ public class LoginController {
         return "loginPage";
     }
 
-    public void setUserInfo(User user_, HttpServletRequest request, HttpServletResponse response,String type) {
+    public void setUserInfo(User user_, HttpServletRequest request, HttpServletResponse response, String type) {
         HttpSession session = request.getSession();
         logger.info("外部的SessionId:" + session.getId());
         session.setAttribute("userLogin", user_.getUserLogin());
