@@ -1,5 +1,6 @@
 package com.doctor.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserPasswordSevice;
@@ -169,7 +170,12 @@ public class UserController {
             //获取session中的用户信息
             User userinfo = (User) session.getAttribute("userinfo");
             String rel = userService.updatePassword(user,userinfo);
-            session.removeAttribute("userinfo");
+            JSONObject jsonObject = JSONObject.parseObject(rel);
+            int j = (int)jsonObject.get("code");
+            System.out.println(j);
+            if (j == 0){
+                session.removeAttribute("userinfo");
+            }
             return rel;
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,19 +186,19 @@ public class UserController {
     @ApiOperation(value = "验证Session")
     @RequestMapping(value = "/ifSession",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public int ifSession(HttpServletRequest request){
+    public String ifSession(HttpServletRequest request){
         try {
             HttpSession session = request.getSession(false);
             //获取session中的用户信息
-          session.getAttribute("userinfo");
-            if (null == session){
-                return 1;
+            User userinfo = (User) session.getAttribute("userinfo");
+            if (null == userinfo){
+                return ReturnUtil.toJSONString(1, "session无效", null);
             }else {
-                return 0;
+                return ReturnUtil.toJSONString(0, "session有效", userinfo);
             }
         }catch (Exception e){
             e.printStackTrace();
-            return 1;
+            return ReturnUtil.toJSONString(1, "系统错误", null);
         }
     }
 

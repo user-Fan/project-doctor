@@ -51,6 +51,10 @@
         select<include refid="Base_Column_List"/>from doctor where doctor_id = #{id} and doctor_status != -1
     </select>
 
+    <select id="findByIds" resultMap="BaseResultMap">
+        select<include refid="Base_Column_List"/>from doctor where doctor_id = #{doctorId}
+    </select>
+
     <update id="updateStatus">
     update doctor set doctor_status = #{status} where doctor_id = #{id}
   </update>

@@ -138,6 +138,11 @@
         <include refid="Base_Column_List"/>
         from user where user_id = #{id} and  user_status != -1
     </select>
+    <select id="findByIds" resultMap="userinfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user where user_id = #{userId}
+    </select>
 
     <update id="updateStatus" >
         update user set user_status = #{status} where user_id = #{id}

@@ -6,8 +6,11 @@ import com.doctor.Iservice.IUserService;
 import com.doctor.api.Vo.OrderVo;
 import com.doctor.common.Formate;
 import com.doctor.common.OrderUtil;
+import com.doctor.common.ReturnUtil;
 import com.doctor.pojo.Order;
 import com.doctor.pojo.User;
+import com.doctor.pojo.vo.OrderListVO;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +120,7 @@ public class OrderController {
 
     private String getPayResult(Integer point, Integer userId, Integer idd, String type) {
         int result = userService.updateUserPoint(point, userId);
-        int result2 = orderService.toapply( idd, 000, type);
+        int result2 = orderService.toapply(idd, 000, type);
         if (result == result2) {
             return "1";
         }
@@ -131,7 +134,7 @@ public class OrderController {
     public String quxiaoOrder(String id, HttpServletRequest request) {
         Integer idd = Integer.parseInt(id);
         int result = orderService.quxiaoOrder(idd);
-        if (1==result){
+        if (1 == result) {
             return "1";
         }
         return "0";
@@ -166,5 +169,19 @@ public class OrderController {
             return orderService.orderLoge(userinfo.getUserId());
         }
         return null;
+    }
+
+    //查询所有订单
+    @ApiOperation(value = "查询所有订单")
+    @RequestMapping(value = "/orderList", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String orderList() {
+        try {
+            List<OrderListVO> listVOS = orderService.orderList();
+            return ReturnUtil.toJSONString(0, "查询成功", listVOS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
     }
 }
