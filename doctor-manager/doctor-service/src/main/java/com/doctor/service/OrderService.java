@@ -94,8 +94,10 @@ public class OrderService implements IOrderService {
             //设置订单挂号号码
             orderVo.setOrderNumber(list.get(i).getOrderNumber());
             //设置订单状态描述
-            String orderMsg = getStatusMsg(list.get(i).getPay(),list.get(i).getStatus());
-            orderVo.setStatusMsg(orderMsg);
+            if (null!=list.get(i).getStatus()&&null!=list.get(i).getPay()){
+                String orderMsg = getStatusMsg(list.get(i).getPay(),list.get(i).getStatus());
+                orderVo.setStatusMsg(orderMsg);
+            }
             result.add(orderVo);
 
         }
