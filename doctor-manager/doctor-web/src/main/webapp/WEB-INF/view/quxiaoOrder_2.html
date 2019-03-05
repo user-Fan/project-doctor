@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inspire - Admin and Dashboard Template</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+</head>
+
+<body>
+<div class="app header-default side-nav-dark">
+    <div class="layout">
+        <div class="page-container">
+
+            <div class="main-content">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title">Default Datatable</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="datatable" class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>订单id</th>
+                                                <th>订单积分</th>
+                                                <th>医生</th>
+                                                <th>订单原因</th>
+                                                <th>创建时间</th>
+                                                <th>就诊时间</th>
+                                                <th>取消订单</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="orderList">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="preloader">
+        <div class="loader" id="loader-1"></div>
+    </div>
+</div>
+
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="assets/plugins/datatables/jszip.min.js"></script>
+<script src="assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<script src="assets/js/datatables.init.js"></script>
+
+<script type="text/javascript">
+    $.ajax
+    ({
+        cache: false,
+        async: false,
+        dataType: 'json', type: 'post',
+        url: "/getAllOrderByUserid",
+        success: function (data) {
+            var json = data;
+            for (var i = 0; i < json.length; i++) {
+                $("#orderList").append("<tr>" + "<td>" + json[i].id + "</td>" + "<td>" + json[i].orderPoint + "</td><td>" + json[i].doctorName + "</td><td>" + json[i].putReason + "</td><td>" + json[i].beginTime + "</td><td>" + json[i].endTime + "</td><td><button type='button' class='btn btn-success btn-rounded' onclick='quxiaoOrder(" + "&quot;" + json[i].id + "&quot;" + ")' >立即取消</button></td></tr>");
+            }
+        }
+    });
+
+    function quxiaoOrder(id) {
+        alert(id);
+        $.ajax
+        ({
+            cache: false,
+            async: false,
+            dataType: 'json',
+            type: 'post',
+            data:{"id":id},
+            url: "/quxiaoOrderV2",
+            success: function (data) {
+                if (data==1){
+
+                    alert("取消成功");
+                    history.go(0);
+
+                } else {
+                    alert("取消失败");
+                    eco_refresh();
+                }
+            },error:function () {
+                alert("取消失败");
+                eco_refresh();
+            }
+        });
+    }
+
+    function eco_refresh(){
+        var _body = window.parent;
+        var _iframe1=_body.document.getElementById('getPage');
+        window.onbeforeunload=function(){};
+        _iframe1.contentWindow.location.reload(true);
+    }
+</script>
+</body>
+
+</html>

@@ -27,9 +27,7 @@ public class Doctor {
 
     private String doctorIntroduce;
 
-    private Integer itemParentNum;
-
-    private Integer permissionsId;
+    private String itemParentNum;
 
     private Date creatTime;
 
@@ -41,13 +39,7 @@ public class Doctor {
 
     private Integer doctorStatus;
 
-    public String getDoctorEmail() {
-        return doctorEmail;
-    }
-
-    public void setDoctorEmail(String doctorEmail) {
-        this.doctorEmail = doctorEmail;
-    }
+    private Integer permissionsId;
 
     public Integer getDoctorId() {
         return doctorId;
@@ -55,6 +47,14 @@ public class Doctor {
 
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail == null ? null : doctorEmail.trim();
     }
 
     public String getDoctorAccount() {
@@ -137,20 +137,12 @@ public class Doctor {
         this.doctorIntroduce = doctorIntroduce == null ? null : doctorIntroduce.trim();
     }
 
-    public Integer getItemParentNum() {
+    public String getItemParentNum() {
         return itemParentNum;
     }
 
-    public void setItemParentNum(Integer itemParentNum) {
-        this.itemParentNum = itemParentNum;
-    }
-
-    public Integer getpermissionsId() {
-        return permissionsId;
-    }
-
-    public void setpermissionsId(Integer permissionsId) {
-        this.permissionsId = permissionsId;
+    public void setItemParentNum(String itemParentNum) {
+        this.itemParentNum = itemParentNum == null ? null : itemParentNum.trim();
     }
 
     public Date getCreatTime() {
@@ -185,11 +177,19 @@ public class Doctor {
         this.updateby = updateby == null ? null : updateby.trim();
     }
 
-    public Integer getStatus() {
+    public Integer getDoctorStatus() {
         return doctorStatus;
     }
 
-    public void setStatus(Integer status) {
+    public void setDoctorStatus(Integer doctorStatus) {
         this.doctorStatus = doctorStatus;
+    }
+
+    public Integer getPermissionsId() {
+        return permissionsId;
+    }
+
+    public void setPermissionsId(Integer permissionsId) {
+        this.permissionsId = permissionsId;
     }
 }

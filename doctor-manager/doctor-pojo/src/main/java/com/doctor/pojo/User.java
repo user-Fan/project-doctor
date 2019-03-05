@@ -21,6 +21,7 @@ public class User {
 	 * '权限编号', PRIMARY KEY (`user_id`) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT
 	 * CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 	 */
+	private Integer userPoint;
 	private Integer userId;
 	private String userName;
 	private Integer userAge;
@@ -39,6 +40,14 @@ public class User {
 	private Integer permissionsId;
 	private String Password;
 	private Integer passwordId;
+
+	public Integer getUserPoint() {
+		return userPoint;
+	}
+
+	public void setUserPoint(Integer userPoint) {
+		this.userPoint = userPoint;
+	}
 
 	public User() {
 		super();

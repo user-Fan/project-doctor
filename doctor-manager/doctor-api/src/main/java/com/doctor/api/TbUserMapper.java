@@ -22,4 +22,6 @@ public interface TbUserMapper {
     int insertPassword(User user);
 
     int updatePasswordId(@Param("userId") Integer userId,@Param("passwordId")  Integer passwordId);
+
+    int updatePoint(@Param("userPoint")Integer point,@Param("userId") Integer userId);
 }

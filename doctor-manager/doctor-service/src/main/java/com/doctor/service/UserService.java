@@ -14,8 +14,6 @@ import com.doctor.Iservice.IUserService;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
-import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 import com.doctor.pojo.UserPassword;
 import org.slf4j.Logger;
@@ -238,5 +236,10 @@ public class UserService implements IUserService {
             return userLoginInfo.get(0);
         }
         return null;
+    }
+
+    @Override
+    public int updateUserPoint(Integer serPoint,Integer id) {
+      return   tbUserMapper.updatePoint(serPoint,id);
     }
 }

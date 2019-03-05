@@ -30,6 +30,7 @@ public interface IUserService {
 
     int updatePasswordId(Integer userId,Integer passwordId);
 
+    int updateUserPoint(Integer serPoint,Integer id);
 
     String updatePassword(User user, User userinfo);
 }
