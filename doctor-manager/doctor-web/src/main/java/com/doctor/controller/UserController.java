@@ -1,5 +1,6 @@
 package com.doctor.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserPasswordSevice;
@@ -169,7 +170,12 @@ public class UserController {
             //获取session中的用户信息
             User userinfo = (User) session.getAttribute("userinfo");
             String rel = userService.updatePassword(user,userinfo);
-            session.removeAttribute("userinfo");
+            JSONObject jsonObject = JSONObject.parseObject(rel);
+            int j = (int)jsonObject.get("code");
+            System.out.println(j);
+            if (j == 0){
+                session.removeAttribute("userinfo");
+            }
             return rel;
         } catch (Exception e) {
             e.printStackTrace();
