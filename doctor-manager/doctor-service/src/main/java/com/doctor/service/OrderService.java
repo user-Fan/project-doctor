@@ -91,7 +91,13 @@ public class OrderService implements IOrderService {
             orderVo.setId(list.get(i).getId());
             //设置订单积分
             orderVo.setOrderPoint(200);
+            //设置订单挂号号码
+            orderVo.setOrderNumber(list.get(i).getOrderNumber());
+            //设置订单状态描述
+            String orderMsg = getStatusMsg(list.get(i).getPay(),list.get(i).getStatus());
+            orderVo.setStatusMsg(orderMsg);
             result.add(orderVo);
+
         }
         return result;
     }
@@ -102,5 +108,32 @@ public class OrderService implements IOrderService {
         order.setId(id);
         order.setStatus(-1);
        return orderMapper.updateByPrimaryKey(order);
+    }
+
+    @Override
+    public List<OrderVo> getOKOrderByUserid(Integer userId) {
+        List<Order> list = orderMapper.getOKOrderByUserid(userId);
+        return getOrderVoList(list);
+    }
+
+    @Override
+    public List<OrderVo> orderLoge(Integer userId) {
+        List<Order> list = orderMapper.orderLoge(userId);
+        return getOrderVoList(list);
+    }
+
+    private String getStatusMsg(int pay,int status){
+     if (-1==status){
+         return "已取消订单";
+     }else if(2==status){
+         return "已完成订单";
+     }else if(1==pay&&1==status){
+         return "已支付订单";
+     }else if(2==pay){
+         return "已退款订单";
+     }else if (0==status&&0==pay){
+         return "未支付订单";
+     }
+     return "错误订单";
     }
 }

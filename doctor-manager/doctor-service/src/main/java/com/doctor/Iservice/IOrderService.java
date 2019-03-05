@@ -16,4 +16,12 @@ public interface IOrderService {
     int toapply(Integer id,Integer point,String type);
     //取消未支付订单
     int quxiaoOrder(Integer userId);
+
+    //查询用户支付成功未就诊的订单
+    List<OrderVo> getOKOrderByUserid(Integer userId);
+
+    //查询用户的多有订单
+    List<OrderVo> orderLoge(Integer userId);
+
+
 }

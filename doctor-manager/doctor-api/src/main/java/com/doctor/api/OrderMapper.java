@@ -29,4 +29,10 @@ public interface OrderMapper {
     //查询医生当天的订单数量
     int selectCountbyTimeAndDoctorId(@Param("doctorId")Integer doctorId,@Param("date") Date date);
 
+    //查询所有未支付订单
+    List <Order> getOKOrderByUserid(Integer userId);
+
+    //查询用户所有订单
+    List <Order> orderLoge(Integer userId);
+
 }

@@ -34,6 +34,8 @@ public class OrderVo {
 
     private Integer remind;
 
+    private String statusMsg;
+
     public Integer getId() {
         return id;
     }
@@ -151,4 +153,12 @@ public class OrderVo {
     private Integer status;
 
     private Integer orderPoint;
+
+    public String getStatusMsg() {
+        return statusMsg;
+    }
+
+    public void setStatusMsg(String statusMsg) {
+        this.statusMsg = statusMsg;
+    }
 }

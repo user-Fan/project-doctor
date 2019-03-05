@@ -58,14 +58,13 @@ public class OrderController {
     @RequestMapping("getAllOrderByUserid")
     @ResponseBody
     public List<OrderVo> getOrderList(OrderVo orderVo, HttpServletRequest request) {
-
-        HttpSession session = request.getSession(false);
-        User userinfo = (User) session.getAttribute("userinfo");
+        User userinfo = getSessionUser(request);
         if ((userinfo != null) || StringUtils.isNotBlank(userinfo.getUserLogin())) {
             return orderService.getAllOrderByUserid(userinfo.getUserId());
         }
         return null;
     }
+
 
     //支付生成挂号单方法
     @RequestMapping("toapply")
@@ -92,7 +91,7 @@ public class OrderController {
     @ResponseBody
     public String notoapply(String id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        User userinfo = (User) session.getAttribute("userinfo");
+        User userinfo = getSessionUser(request);
         Integer idd = Integer.parseInt(id);
         User userInfo_ = userService.getUserUserLogin_v2(userinfo.getUserLogin());
         if ((userinfo != null) && StringUtils.isNotBlank(userinfo.getUserLogin()) && userInfo_.getUserPoint() >= 0) {
@@ -109,9 +108,7 @@ public class OrderController {
     @RequestMapping("getPayOrderByUserid")
     @ResponseBody
     public List<OrderVo> getPayOrderByUserid(OrderVo orderVo, HttpServletRequest request) {
-
-        HttpSession session = request.getSession(false);
-        User userinfo = (User) session.getAttribute("userinfo");
+        User userinfo = getSessionUser(request);
         if ((userinfo != null) || StringUtils.isNotBlank(userinfo.getUserLogin())) {
             return orderService.getPayOrderByUserid(userinfo.getUserId());
         }
@@ -138,5 +135,36 @@ public class OrderController {
             return "1";
         }
         return "0";
+    }
+
+    //获取session
+    private User getSessionUser(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        User userinfo = (User) session.getAttribute("userinfo");
+        return userinfo;
+    }
+
+    //查询所有未就诊订单
+    @RequestMapping("getOKOrderByUserid")
+    @ResponseBody
+    public List<OrderVo> getOKOrderByUserid(OrderVo orderVo, HttpServletRequest request) {
+
+        User userinfo = getSessionUser(request);
+        if ((userinfo != null) || StringUtils.isNotBlank(userinfo.getUserLogin())) {
+            return orderService.getOKOrderByUserid(userinfo.getUserId());
+        }
+        return null;
+    }
+
+    //查询所有未就诊订单
+    @RequestMapping("orderLogeV1")
+    @ResponseBody
+    public List<OrderVo> orderLoge(OrderVo orderVo, HttpServletRequest request) {
+
+        User userinfo = getSessionUser(request);
+        if ((userinfo != null) || StringUtils.isNotBlank(userinfo.getUserLogin())) {
+            return orderService.orderLoge(userinfo.getUserId());
+        }
+        return null;
     }
 }

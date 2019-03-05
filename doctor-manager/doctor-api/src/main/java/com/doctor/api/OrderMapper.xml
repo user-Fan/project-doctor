@@ -84,5 +84,41 @@
     where order_user.end_time = #{date} and order_user.doctor_id = #{doctorId}
   </select>
 
+    <select id="getOKOrderByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+   SELECT
+	doctor.doctor_name,
+	order_user.begin_time,
+	order_user.end_time,
+	order_user.put_reason,
+	order_user.id,
+	order_user.pay,
+	order_user.status,
+	order_user.order_number
+FROM
+	order_user,
+	doctor
+WHERE
+	1 = 1
+	AND user_id =#{userId,jdbcType=INTEGER} and order_user.doctor_id = doctor.doctor_id  and order_user.pay=1 and order_user.status=1;
+  </select>
+
+    <select id="orderLoge" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+   SELECT
+	doctor.doctor_name,
+	order_user.begin_time,
+	order_user.end_time,
+	order_user.put_reason,
+	order_user.id,
+	order_user.pay,
+	order_user.status,
+	order_user.order_number
+FROM
+	order_user,
+	doctor
+WHERE
+	1 = 1
+	AND user_id =#{userId,jdbcType=INTEGER} and order_user.doctor_id = doctor.doctor_id ;
+  </select>
+
 
 </mapper>
