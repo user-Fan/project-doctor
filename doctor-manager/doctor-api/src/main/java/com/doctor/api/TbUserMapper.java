@@ -24,4 +24,14 @@ public interface TbUserMapper {
     int updatePasswordId(@Param("userId") Integer userId,@Param("passwordId")  Integer passwordId);
 
     int updatePoint(@Param("userPoint")Integer point,@Param("userId") Integer userId);
+
+    List<User> selectUserList();
+
+    User findById(int id);
+
+    int updateStatus(@Param("id")int id, @Param("status")int status);
+
+    int updateUser(User user);
+
+    int deleteUser(int id);
 }

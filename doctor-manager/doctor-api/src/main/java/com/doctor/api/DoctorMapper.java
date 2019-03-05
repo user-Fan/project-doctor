@@ -1,6 +1,8 @@
 package com.doctor.api;
 
 import com.doctor.pojo.Doctor;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +15,14 @@ public interface DoctorMapper {
     int insertDoctor(Doctor doctor);
 
     List<Doctor> findByItemParentNum(String itemParentNum);
+
+    List<Doctor> selctDoctotList();
+
+    Doctor findById(Integer id);
+
+    int updateStatus(@Param("id")int id,@Param("status")int status);
+
+    int updateDoctor(Doctor doctor);
+
+    int deleteDoctor(int id);
 }

@@ -29,6 +29,8 @@ public class Doctor {
 
     private String itemParentNum;
 
+    private Integer permissionsId;
+
     private Date creatTime;
 
     private String creatby;
@@ -39,7 +41,13 @@ public class Doctor {
 
     private Integer doctorStatus;
 
-    private Integer permissionsId;
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
 
     public Integer getDoctorId() {
         return doctorId;
@@ -47,14 +55,6 @@ public class Doctor {
 
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
-    }
-
-    public String getDoctorEmail() {
-        return doctorEmail;
-    }
-
-    public void setDoctorEmail(String doctorEmail) {
-        this.doctorEmail = doctorEmail == null ? null : doctorEmail.trim();
     }
 
     public String getDoctorAccount() {
@@ -142,7 +142,15 @@ public class Doctor {
     }
 
     public void setItemParentNum(String itemParentNum) {
-        this.itemParentNum = itemParentNum == null ? null : itemParentNum.trim();
+        this.itemParentNum = itemParentNum;
+    }
+
+    public Integer getpermissionsId() {
+        return permissionsId;
+    }
+
+    public void setpermissionsId(Integer permissionsId) {
+        this.permissionsId = permissionsId;
     }
 
     public Date getCreatTime() {
@@ -185,11 +193,28 @@ public class Doctor {
         this.doctorStatus = doctorStatus;
     }
 
-    public Integer getPermissionsId() {
-        return permissionsId;
-    }
-
-    public void setPermissionsId(Integer permissionsId) {
-        this.permissionsId = permissionsId;
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "doctorId=" + doctorId +
+                ", doctorEmail='" + doctorEmail + '\'' +
+                ", doctorAccount='" + doctorAccount + '\'' +
+                ", doctorPassword='" + doctorPassword + '\'' +
+                ", doctorName='" + doctorName + '\'' +
+                ", doctorPhone='" + doctorPhone + '\'' +
+                ", doctorCardId='" + doctorCardId + '\'' +
+                ", denger='" + denger + '\'' +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", doctorTitle='" + doctorTitle + '\'' +
+                ", doctorIntroduce='" + doctorIntroduce + '\'' +
+                ", itemParentNum='" + itemParentNum + '\'' +
+                ", permissionsId=" + permissionsId +
+                ", creatTime=" + creatTime +
+                ", creatby='" + creatby + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateby='" + updateby + '\'' +
+                ", doctorStatus=" + doctorStatus +
+                '}';
     }
 }

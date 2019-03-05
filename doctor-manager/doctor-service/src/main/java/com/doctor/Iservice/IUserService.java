@@ -33,4 +33,14 @@ public interface IUserService {
     int updateUserPoint(Integer serPoint,Integer id);
 
     String updatePassword(User user, User userinfo);
+
+    List<User> selectUserList();
+
+    User findById(int id);
+
+    int updateStatus(int id, int status);
+
+    int updateUser(User user);
+
+    int deleteUser(int id);
 }

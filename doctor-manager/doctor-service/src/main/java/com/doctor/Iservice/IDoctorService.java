@@ -10,4 +10,14 @@ public interface IDoctorService {
     Doctor findByAccount(String params);
 
     List<Doctor> findByItemParentNum(String itemParentNum );
+
+    List<Doctor> selctDoctotList();
+
+    Doctor findById(Integer findById);
+
+    int updateStatus(int id ,int status);
+
+    int updateDoctor(Doctor doctor);
+
+    int deleteDoctor(int id);
 }

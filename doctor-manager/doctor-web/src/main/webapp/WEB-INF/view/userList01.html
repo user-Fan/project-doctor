@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inspire - Admin and Dashboard Template</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+</head>
+
+<body>
+<div class="app header-default side-nav-dark">
+    <div class="layout">
+        <div class="page-container">
+
+            <div class="main-content">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title">用户管理</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="datatable" class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>手机号</th>
+                                                <th>帐号</th>
+                                                <th>身份证号</th>
+                                                <th>年龄</th>
+                                                <th>积分</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="bbb">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     style="display: none;top: 10% " aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">用户详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="userName" class="col-sm-3 col-form-label">姓名</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userName" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userEmail" class="col-sm-3 col-form-label">邮箱</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userEmail" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userLogin" class="col-sm-3 col-form-label">帐号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userLogin" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userPhone" class="col-sm-3 col-form-label">手机号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userPhone" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userIdCard" class="col-sm-3 col-form-label">身份证号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userIdCard" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userGender" class="col-sm-3 col-form-label">性别</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userGender" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userAge" class="col-sm-3 col-form-label">年龄</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userAge" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userAddress" class="col-sm-3 col-form-label">家庭住址</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userAddress" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userPoint" class="col-sm-3 col-form-label">积分</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="userPoint" placeholder="">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     style="display: none;top: 10% " aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑用户信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="forms-sample" action="/updateUser" method="POST" target="form">
+
+                <div class="form-group row" style="display:none;">
+                    <label for="userId1" class="col-sm-3 col-form-label">id</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userId1" name="userId" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userName1" class="col-sm-3 col-form-label">姓名</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userName1" name="userName" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userEmail1" class="col-sm-3 col-form-label">邮箱</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userEmail1" name="userEmail" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userLogin1" class="col-sm-3 col-form-label">帐号</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userLogin1" name="userLogin" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userPhone1" class="col-sm-3 col-form-label">手机号</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userPhone1" name="userPhone" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userIdCard1" class="col-sm-3 col-form-label">身份证号</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userIdCard1" name="userIdCard" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userGender1" class="col-sm-3 col-form-label">性别</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userGender1" name="userGender" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userAge1" class="col-sm-3 col-form-label">年龄</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userAge1" name="userAge" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userAddress1" class="col-sm-3 col-form-label">家庭住址</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userAddress1" name="userAddress" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="userPoint1" class="col-sm-3 col-form-label">积分</label>
+                    <div class="col-sm-9">
+                        <input type="text"  class="form-control" id="userPoint1" name="userPoint" placeholder="">
+                    </div>
+                </div>
+
+                    <button type="submit" class="btn btn-common mr-3" style="float:right" id ="xg">修改</button>
+                    <button class="btn btn-light" style="float: right">取消</button>
+                    <iframe name="form" id="form" style="display: none"><p>修改成功</p></iframe>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="assets/plugins/datatables/jszip.min.js"></script>
+<script src="assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<script src="assets/js/datatables.init.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#zx').click();
+        $('#form').load(function () {
+            var text = $(this).contents().find("body").text();
+            var j = $.parseJSON(text);
+            if (JSON.stringify(j.code) == 0) {
+                alert(JSON.stringify(j.msg));
+                location = location;
+            } else if (JSON.stringify(j.code) == 1) {
+                alert(JSON.stringify(j.msg));
+            }
+        });
+    })
+
+    $.ajax({
+        cache: false,
+        async: false,
+        url: "/userList",
+        type: "post",
+        contentType: "application/json;cherset=utf-8",
+        dataType: "json",
+        success: function (success) {
+            var user = JSON.stringify(success);
+            var datas = $.parseJSON(user);
+            var rel = JSON.stringify(datas.code);
+            if (rel == 0) {
+                var datac = JSON.stringify(datas.data);
+                var data = JSON.parse(datac);
+                for (var i = 0; i < data.length; i++) {
+                    if (typeof (data[i].userName) == "undefined") {
+                        data[i].userName = "空";
+                    }
+                    if (typeof (data[i].userPhone) == "undefined") {
+                        data[i].userPhone = "空";
+                    }
+                    if (typeof (data[i].userLogin) == "undefined") {
+                        data[i].userLogin = "空";
+                    }
+                    if (typeof (data[i].userIdCard) == "undefined") {
+                        data[i].userIdCard = "空";
+                    }
+                    if (typeof (data[i].userAge) == "undefined") {
+                        data[i].userAge = "空";
+                    }
+                    if (typeof (data[i].userPoint) == "undefined") {
+                        data[i].userPoint = "空";
+                    }
+                    $("#bbb").append("<tr><td>" + data[i].userName + "</td><td>" + data[i].userPhone + "</td><td>" + data[i].userLogin + "</td><td>" + data[i].userIdCard + "</td><td>" + data[i].userAge + "</td><td>" + data[i].userPoint + "</td><td><button type='button' class='btn btn-info' data-toggle='modal' data-target='#myModal1' onclick='xq(" + "&quot;" + data[i].userId + "&quot;" + ");'>详情</button>    <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal2' onclick='bj(" + "&quot;" + data[i].userId + "&quot;" + ");'>编辑</button>    <button type='button' class='btn btn-success' id='" + data[i].userId + "' onclick='qy(" + "&quot;" + data[i].userId + "&quot;" + ");'>启用</button>    <button type='button' class='btn btn-common' onclick='sc(" + "&quot;" + data[i].userId + "&quot;" + ");'>删除</button></td></tr>");
+                    if (data[i].userStatus == 0) {
+                        document.getElementById('' + data[i].userId + '').innerHTML = "禁用"
+                    } else if (data[i].userStatus == 1) {
+                        document.getElementById('' + data[i].userId + '').innerHTML = "启用"
+                    }
+                }
+                ;
+            } else {
+                var msg = JSON.stringify(datas.msg);
+                alert(msg);
+            }
+        },
+    });
+
+
+    function qy(data) {
+        $.ajax({
+            url: "/activateU",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': data
+            },
+            success: function (success) {
+                if (success == 0) {
+                    location = location
+                }
+            }
+        });
+    }
+
+    function xq(id) {
+        $.ajax({
+            url: "/findByUId",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                var user = JSON.stringify(success);
+                var datas = $.parseJSON(user);
+                var rel = JSON.stringify(datas.code);
+                if (rel == 0) {
+                   // $('#userId').val(datas.data.userId);
+                    $('#userName').val(datas.data.userName);
+                    $('#userEmail').val(datas.data.userEmail);
+                    $('#userLogin').val(datas.data.userLogin);
+                    $('#userPhone').val(datas.data.userPhone);
+                    $('#userIdCard').val(datas.data.userIdCard);
+                    $('#userGender').val(datas.data.userGender);
+                    $('#userAge').val(datas.data.userAge);
+                    $('#userAddress').val(datas.data.userAddress);
+                    $('#userPoint').val(datas.data.userPoint);
+                }
+            }
+        });
+    }
+
+    function bj(id) {
+        $.ajax({
+            url: "/findByUId",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                var user = JSON.stringify(success);
+                var datas = $.parseJSON(user);
+                var rel = JSON.stringify(datas.code);
+                if (rel == 0) {
+                     $('#userId1').val(datas.data.userId);
+                    $('#userName1').val(datas.data.userName);
+                    $('#userEmail1').val(datas.data.userEmail);
+                    $('#userLogin1').val(datas.data.userLogin);
+                    $('#userPhone1').val(datas.data.userPhone);
+                    $('#userIdCard1').val(datas.data.userIdCard);
+                    $('#userGender1').val(datas.data.userGender);
+                    $('#userAge1').val(datas.data.userAge);
+                    $('#userAddress1').val(datas.data.userAddress);
+                    $('#userPoint1').val(datas.data.userPoint);
+                }
+            }
+        });
+    }
+
+    function sc(id) {
+        $.ajax({
+            url: "/deleteUser",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                if (success == 0){
+                    alert("删除成功！")
+                    location = location;
+                }
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inspire - Admin and Dashboard Template</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/fonts/line-icons.css">
+
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="main-content">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header border-bottom">
+                            <h4 class="card-title">医生管理</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatable" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>手机号</th>
+                                        <th>帐号</th>
+                                        <th>身份证号</th>
+                                        <th>年龄</th>
+                                        <th>职称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="aaa">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     style="display: none;top: 10% " aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">医生详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="doctorName" class="col-sm-3 col-form-label">姓名</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorName" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorEmail" class="col-sm-3 col-form-label">邮箱</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorEmail" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorAccount" class="col-sm-3 col-form-label">帐号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorAccount" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorPhone" class="col-sm-3 col-form-label">手机号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorPhone" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorCardId" class="col-sm-3 col-form-label">身份证号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorCardId" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="denger" class="col-sm-3 col-form-label">性别</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="denger" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="age" class="col-sm-3 col-form-label">年龄</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="age" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="address" class="col-sm-3 col-form-label">家庭住址</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="address" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorTitle" class="col-sm-3 col-form-label">职称</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorTitle" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="itemParentNum" class="col-sm-3 col-form-label">科室编号</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="itemParentNum" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doctorIntroduce" class="col-sm-3 col-form-label">医生简介</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="disabled" class="form-control" id="doctorIntroduce" placeholder="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     style="display: none;top: 10%;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑医生信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="forms-sample" action="/updateDoctor" method="POST" target="form">
+                    <div class="form-group row" style="display:none;">
+                        <label for="doctorId1" class="col-sm-3 col-form-label">id</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorId1" name="doctorId" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorName1" class="col-sm-3 col-form-label">姓名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorName1" name="doctorName" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorEmail1" class="col-sm-3 col-form-label">邮箱</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorEmail1" name="doctorEmail" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorAccount1" class="col-sm-3 col-form-label">帐号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorAccount1" name="doctorAccount" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorPhone1" class="col-sm-3 col-form-label">手机号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorPhone1" name="doctorPhone" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorCardId1" class="col-sm-3 col-form-label">身份证号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorCardId1" name="doctorCardId" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="denger1" class="col-sm-3 col-form-label">性别</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="denger1" name="denger" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="age1" class="col-sm-3 col-form-label">年龄</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="age1" name="age" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="address1" class="col-sm-3 col-form-label">家庭住址</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="address1" name="address" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorTitle1" class="col-sm-3 col-form-label">职称</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorTitle1" name="doctorTitle" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="itemParentNum1" class="col-sm-3 col-form-label">科室编号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="itemParentNum1" name="itemParentNum" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="doctorIntroduce1" class="col-sm-3 col-form-label">医生简介</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="doctorIntroduce1" name="doctorIntroduce" placeholder="">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-common mr-3" style="float:right" id ="xg">修改</button>
+                    <button class="btn btn-light" style="float: right">取消</button>
+                    <iframe name="form" id="form" style="display: none"><p>修改成功</p></iframe>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
+<script src="assets/js/jquery-min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="assets/plugins/datatables/jszip.min.js"></script>
+<script src="assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+
+<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<script src="assets/js/datatables.init.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#zx').click();
+        $('#form').load(function () {
+            var text = $(this).contents().find("body").text();
+            var j = $.parseJSON(text);
+            if (JSON.stringify(j.code) == 0) {
+                alert(JSON.stringify(j.msg));
+                location = location;
+            } else if (JSON.stringify(j.code) == 1) {
+                alert(JSON.stringify(j.msg));
+            }
+        });
+    })
+
+    $.ajax({
+        cache: false,
+        async: false,
+        url: "/doctorList",
+        type: "post",
+        contentType: "application/json;cherset=utf-8",
+        dataType: "json",
+        success: function (success) {
+            var doctor = JSON.stringify(success);
+            var datas = $.parseJSON(doctor);
+            var rel = JSON.stringify(datas.code);
+            if (rel == 0) {
+                var datac = JSON.stringify(datas.data);
+                var data = JSON.parse(datac);
+                for (var i = 0; i < data.length; i++) {
+                    if (typeof (data[i].doctorName) == "undefined") {
+                        data[i].doctorName = "空";
+                    }
+                    if (typeof (data[i].doctorPhone) == "undefined") {
+                        data[i].doctorPhone = "空";
+                    }
+                    if (typeof (data[i].doctorAccount) == "undefined") {
+                        data[i].doctorAccount = "空";
+                    }
+                    if (typeof (data[i].doctorCardId) == "undefined") {
+                        data[i].doctorCardId = "空";
+                    }
+                    if (typeof (data[i].age) == "undefined") {
+                        data[i].age = "空";
+                    }
+                    if (typeof (data[i].doctorTitle) == "undefined") {
+                        data[i].doctorTitle = "空";
+                    }
+                    $("#aaa").append("<tr><td>" + data[i].doctorName + "</td><td>" + data[i].doctorPhone + "</td><td>" + data[i].doctorAccount + "</td><td>" + data[i].doctorCardId + "</td><td>" + data[i].age + "</td><td>" + data[i].doctorTitle + "</td><td><button type='button' class='btn btn-info' data-toggle='modal' data-target='#myModal1' onclick='xq(" + "&quot;" + data[i].doctorId + "&quot;" + ");'>详情</button>    <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal2' onclick='bj(" + "&quot;" + data[i].doctorId + "&quot;" + ");'>编辑</button>    <button type='button' class='btn btn-success' id='" + data[i].doctorId + "' onclick='qy(" + "&quot;" + data[i].doctorId + "&quot;" + ");'></button>    <button type='button' class='btn btn-common' onclick='sc(" + "&quot;" + data[i].doctorId + "&quot;" + ");'>删除</button></td></tr>");
+                    if (data[i].doctorStatus == 0) {
+                        document.getElementById('' + data[i].doctorId + '').innerHTML = "禁用"
+                    } else if (data[i].doctorStatus == 1) {
+                        document.getElementById('' + data[i].doctorId + '').innerHTML = "启用"
+                    }
+                }
+            } else {
+                var msg = JSON.stringify(datas.msg);
+                alert(msg);
+            }
+        },
+    });
+
+    function qy(data) {
+        $.ajax({
+            url: "/activateD",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': data
+            },
+            success: function (success) {
+                if (success == 0) {
+                    location = location;
+                }
+            }
+        });
+    }
+
+    function xq(id) {
+        $.ajax({
+            url: "/findByDId",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                var doctor = JSON.stringify(success);
+                var datas = $.parseJSON(doctor);
+                var rel = JSON.stringify(datas.code);
+                if (rel == 0) {
+                    $('#doctorName').val(datas.data.doctorName);
+                    $('#doctorEmail').val(datas.data.doctorEmail);
+                    $('#doctorAccount').val(datas.data.doctorAccount);
+                    $('#doctorPhone').val(datas.data.doctorPhone);
+                    $('#doctorCardId').val(datas.data.doctorCardId);
+                    $('#denger').val(datas.data.denger);
+                    $('#age').val(datas.data.age);
+                    $('#address').val(datas.data.address);
+                    $('#doctorTitle').val(datas.data.doctorTitle);
+                    $('#itemParentNum').val(datas.data.itemParentNum);
+                    $('#doctorIntroduce').val(datas.data.doctorIntroduce);
+                }
+            }
+        });
+    }
+
+    function bj(id) {
+        $.ajax({
+            url: "/findByDId",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                var doctor = JSON.stringify(success);
+                var datas = $.parseJSON(doctor);
+                var rel = JSON.stringify(datas.code);
+                if (rel == 0) {
+                    $('#doctorId1').val(datas.data.doctorId);
+                    $('#doctorName1').val(datas.data.doctorName);
+                    $('#doctorEmail1').val(datas.data.doctorEmail);
+                    $('#doctorAccount1').val(datas.data.doctorAccount);
+                    $('#doctorPhone1').val(datas.data.doctorPhone);
+                    $('#doctorCardId1').val(datas.data.doctorCardId);
+                    $('#denger1').val(datas.data.denger);
+                    $('#age1').val(datas.data.age);
+                    $('#address1').val(datas.data.address);
+                    $('#doctorTitle1').val(datas.data.doctorTitle);
+                    $('#itemParentNum1').val(datas.data.itemParentNum);
+                    $('#doctorIntroduce1').val(datas.data.doctorIntroduce);
+                }
+            }
+        });
+    }
+
+    function sc(id) {
+        $.ajax({
+            url: "/deleteDoctor",
+            type: "get",
+            contentType: "application/json;cherset=utf-8",
+            dataType: "json",
+            data: {
+                'id': id
+            },
+            success: function (success) {
+                if (success == 0){
+                    alert("删除成功！")
+                    location = location;
+                }
+            }
+        });
+    }
+
+
+
+</script>
+
+
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>

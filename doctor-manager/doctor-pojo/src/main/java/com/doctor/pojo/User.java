@@ -21,7 +21,6 @@ public class User {
 	 * '权限编号', PRIMARY KEY (`user_id`) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT
 	 * CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 	 */
-	private Integer userPoint;
 	private Integer userId;
 	private String userName;
 	private Integer userAge;
@@ -40,6 +39,7 @@ public class User {
 	private Integer permissionsId;
 	private String Password;
 	private Integer passwordId;
+	private Integer userPoint;
 
 	public Integer getUserPoint() {
 		return userPoint;
@@ -192,6 +192,8 @@ public class User {
 	public void setPassword(String password) {
 		Password = password;
 	}
+
+
 
 	public User(Integer userId, String userName, Integer userAge, String userIdCard, String userPhone, String userEmail, String userAddress, Integer userStatus, String userGender, Date creatTime, String creatBy, String userLogin, Integer update_time, String updateBy, String photo, Integer permissionsId, String password,Integer passwordId) {
 		this.userId = userId;
