@@ -29,4 +29,5 @@ public interface OrderMapper {
     //查询医生当天的订单数量
     int selectCountbyTimeAndDoctorId(@Param("doctorId")Integer doctorId,@Param("date") Date date);
 
+    List<Order> selectOrderList();
 }

@@ -2,6 +2,7 @@ package com.doctor.Iservice;
 
 import com.doctor.api.Vo.OrderVo;
 import com.doctor.pojo.Order;
+import com.doctor.pojo.vo.OrderListVO;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IOrderService {
     int toapply(Integer id,Integer point,String type);
     //取消未支付订单
     int quxiaoOrder(Integer userId);
+
+    List<OrderListVO> orderList();
 }

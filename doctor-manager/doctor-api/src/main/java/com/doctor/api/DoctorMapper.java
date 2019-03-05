@@ -25,4 +25,6 @@ public interface DoctorMapper {
     int updateDoctor(Doctor doctor);
 
     int deleteDoctor(int id);
+
+    Doctor findByIds(Integer doctorId);
 }

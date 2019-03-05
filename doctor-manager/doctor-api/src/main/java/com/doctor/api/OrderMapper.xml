@@ -84,5 +84,8 @@
     where order_user.end_time = #{date} and order_user.doctor_id = #{doctorId}
   </select>
 
+    <select id="selectOrderList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from order_user
+    </select>
 
 </mapper>
