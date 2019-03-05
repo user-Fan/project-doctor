@@ -1,7 +1,9 @@
 package com.doctor.api;
 
 import com.doctor.pojo.Order;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
@@ -23,5 +25,8 @@ public interface OrderMapper {
 
     //查询用户支付订单
     List <Order> getPayOrderByUserid(Integer userId);
+
+    //查询医生当天的订单数量
+    int selectCountbyTimeAndDoctorId(@Param("doctorId")Integer doctorId,@Param("date") Date date);
 
 }

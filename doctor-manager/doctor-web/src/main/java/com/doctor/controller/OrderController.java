@@ -67,16 +67,15 @@ public class OrderController {
         return null;
     }
 
-    //支付方法
+    //支付生成挂号单方法
     @RequestMapping("toapply")
     @ResponseBody
     public String toapply(String id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         User userinfo = (User) session.getAttribute("userinfo");
         Integer idd = Integer.parseInt(id);
-        if ((userinfo != null) && StringUtils.isNotBlank(userinfo.getUserLogin()) && userinfo.getUserPoint() >= 200) {
-
-            User userInfo_ = userService.getUserUserLogin_v2(userinfo.getUserLogin());
+        User userInfo_ = userService.getUserUserLogin_v2(userinfo.getUserLogin());
+        if ((userinfo != null) && StringUtils.isNotBlank(userinfo.getUserLogin()) && userInfo_.getUserPoint() >= 200) {
             Integer point = userInfo_.getUserPoint() - 200;
             //调用积分扣减方法
             String result = getPayResult(point, userinfo.getUserId(), idd, OrderUtil.REDUCE_CODE);
@@ -95,11 +94,9 @@ public class OrderController {
         HttpSession session = request.getSession(false);
         User userinfo = (User) session.getAttribute("userinfo");
         Integer idd = Integer.parseInt(id);
-        if ((userinfo != null) && StringUtils.isNotBlank(userinfo.getUserLogin()) && userinfo.getUserPoint() >= 200) {
-
-            User userInfo_ = userService.getUserUserLogin_v2(userinfo.getUserLogin());
+        User userInfo_ = userService.getUserUserLogin_v2(userinfo.getUserLogin());
+        if ((userinfo != null) && StringUtils.isNotBlank(userinfo.getUserLogin()) && userInfo_.getUserPoint() >= 0) {
             Integer point = userInfo_.getUserPoint() + 200;
-
             String result = getPayResult(point, userinfo.getUserId(), idd, OrderUtil.ADD_CODE);
             session.removeAttribute("userinfo");
             session.setAttribute("userinfo", userInfo_);
@@ -123,10 +120,23 @@ public class OrderController {
 
     private String getPayResult(Integer point, Integer userId, Integer idd, String type) {
         int result = userService.updateUserPoint(point, userId);
-        int result2 = orderService.toapply(userId, idd, 000, type);
+        int result2 = orderService.toapply( idd, 000, type);
         if (result == result2) {
             return "1";
         }
         return null;
+    }
+
+
+    //取消未支付订单方法
+    @RequestMapping("quxiaoOrderV2")
+    @ResponseBody
+    public String quxiaoOrder(String id, HttpServletRequest request) {
+        Integer idd = Integer.parseInt(id);
+        int result = orderService.quxiaoOrder(idd);
+        if (1==result){
+            return "1";
+        }
+        return "0";
     }
 }

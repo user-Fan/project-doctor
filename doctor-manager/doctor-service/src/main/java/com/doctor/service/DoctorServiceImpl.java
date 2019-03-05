@@ -34,7 +34,7 @@ public class DoctorServiceImpl implements IDoctorService {
                   denger = "保密";
               }else if (denger.equals("1")){
                   denger = "男";
-              }else if(denger.equals("1")){
+              }else if(denger.equals("2")){
                   denger = "女";
               }
               result.get(i).setDenger(denger);

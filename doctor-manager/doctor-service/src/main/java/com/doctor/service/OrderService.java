@@ -41,46 +41,66 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderVo> getAllOrderByUserid(Integer userId) {
         List<Order> list = orderMapper.getAllOrderByUserid(userId);
-        List<OrderVo> result = new ArrayList<>();
-        for (int i =0;i<list.size();i++){
-            result.add(getOrderVo(list.get(i)));
-        }
-      return result;
+      return getOrderVoList(list);
     }
 
     @Override
-    public int toapply(Integer userId, Integer id,Integer point,String type) {
+    public int toapply( Integer id,Integer point,String type) {
         Order order = new Order();
         order.setId(id);
         if(OrderUtil.ADD_CODE.equals(type)){
+            //设置退款成功
             order.setPay(2);
         }else if (OrderUtil.REDUCE_CODE.equals(type)){
+            //1.支付状态
             order.setPay(1);
+            //2.支付积分
             order.setOrderPoint(200);
+            //查询此订单的医生id，和就诊时间
+            Order orderDoctorIdAndDate= orderMapper.selectByPrimaryKey(id);
+            //医生id获取
+            int doctorId =orderDoctorIdAndDate.getDoctorId();
+            //就诊时间获取
+            Date date = orderDoctorIdAndDate.getEndTime();
+            //查询就诊时间内的此医生的所用订单
+            int num = orderMapper.selectCountbyTimeAndDoctorId(doctorId,date);
+            //3.设置就诊号码
+            order.setOrderNumber(Integer.toString(num));
+            //4.设置就诊状态为挂号成功
+            order.setStatus(1);
         }
         int result= orderMapper.updateByPrimaryKey(order);
+
         return  result;
     }
 
     @Override
     public List<OrderVo> getPayOrderByUserid(Integer userId) {
         List<Order> list = orderMapper.getPayOrderByUserid(userId);
+        return getOrderVoList(list);
+    }
+
+    private List<OrderVo> getOrderVoList(List<Order> list){
         List<OrderVo> result = new ArrayList<>();
         for (int i =0;i<list.size();i++){
-            result.add(getOrderVo(list.get(i)));
+            OrderVo orderVo = new OrderVo();
+            orderVo.setDoctorName(list.get(i).getDoctorName());
+            orderVo.setPutReason(list.get(i).getPutReason());
+            orderVo.setBeginTime(Formate.getStringDate(list.get(i).getBeginTime()));
+            orderVo.setEndTime(Formate.getStringDate(list.get(i).getEndTime()));
+            orderVo.setId(list.get(i).getId());
+            //设置订单积分
+            orderVo.setOrderPoint(200);
+            result.add(orderVo);
         }
         return result;
     }
 
-    private OrderVo getOrderVo(Order order){
-        OrderVo orderVo = new OrderVo();
-        orderVo.setDoctorName(order.getDoctorName());
-        orderVo.setPutReason(order.getPutReason());
-        orderVo.setBeginTime(Formate.getStringDate(order.getBeginTime()));
-        orderVo.setEndTime(Formate.getStringDate(order.getEndTime()));
-        orderVo.setId(order.getId());
-        //设置订单积分
-        orderVo.setOrderPoint(200);
-        return orderVo;
+    @Override
+    public int quxiaoOrder(Integer id) {
+        Order order = new Order();
+        order.setId(id);
+        order.setStatus(-1);
+       return orderMapper.updateByPrimaryKey(order);
     }
 }

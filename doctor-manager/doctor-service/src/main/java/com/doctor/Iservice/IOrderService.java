@@ -13,5 +13,7 @@ public interface IOrderService {
     //用户支付但未就诊的订单
     List<OrderVo> getPayOrderByUserid(Integer userId);
     //支付方法
-    int toapply(Integer userId,Integer id,Integer point,String type);
+    int toapply(Integer id,Integer point,String type);
+    //取消未支付订单
+    int quxiaoOrder(Integer userId);
 }

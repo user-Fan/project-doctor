@@ -47,7 +47,7 @@
                                                 <th>订单原因</th>
                                                 <th>创建时间</th>
                                                 <th>就诊时间</th>
-                                                <th>立即退款</th>
+                                                <th>取消订单</th>
                                             </tr>
                                             </thead>
                                             <tbody id="orderList">
@@ -99,16 +99,16 @@
         cache: false,
         async: false,
         dataType: 'json', type: 'post',
-        url: "/getPayOrderByUserid",
+        url: "/getAllOrderByUserid",
         success: function (data) {
             var json = data;
             for (var i = 0; i < json.length; i++) {
-                $("#orderList").append("<tr>" + "<td>" + json[i].id + "</td>" + "<td>" + json[i].orderPoint + "</td><td>" + json[i].doctorName + "</td><td>" + json[i].putReason + "</td><td>" + json[i].beginTime + "</td><td>" + json[i].endTime + "</td><td><button type='button' class='btn btn-success btn-rounded' onclick='tonoapply(" + "&quot;" + json[i].id + "&quot;" + ")' >立即退款</button></td></tr>");
+                $("#orderList").append("<tr>" + "<td>" + json[i].id + "</td>" + "<td>" + json[i].orderPoint + "</td><td>" + json[i].doctorName + "</td><td>" + json[i].putReason + "</td><td>" + json[i].beginTime + "</td><td>" + json[i].endTime + "</td><td><button type='button' class='btn btn-success btn-rounded' onclick='quxiaoOrder(" + "&quot;" + json[i].id + "&quot;" + ")' >立即取消</button></td></tr>");
             }
         }
     });
 
-    function tonoapply(id) {
+    function quxiaoOrder(id) {
         alert(id);
         $.ajax
         ({
@@ -117,19 +117,19 @@
             dataType: 'json',
             type: 'post',
             data:{"id":id},
-            url: "/tonoapply",
+            url: "/quxiaoOrderV2",
             success: function (data) {
                 if (data==1){
 
-                    alert("退款成功");
+                    alert("取消成功");
                     history.go(0);
 
                 } else {
-                    alert("退款失败");
+                    alert("取消失败");
                     eco_refresh();
                 }
             },error:function () {
-                alert("退款失败");
+                alert("取消失败");
                 eco_refresh();
             }
         });
