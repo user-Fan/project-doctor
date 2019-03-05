@@ -3,6 +3,8 @@ package com.doctor.controller;
 import java.io.IOException;
 import java.util.List;
 
+import com.doctor.api.Vo.LoginVo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,93 +28,94 @@ import javax.servlet.http.Cookie;
  */
 @Controller
 public class LoginController {
-	public final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	@Autowired
-	IUserService UserService;
+    public final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    @Autowired
+    IUserService UserService;
 
-	@RequestMapping("/")
-	public String getIndex() {
-		logger.info("进入TestController----------跳转index.html");
-		return "index";
-	}
-	@RequestMapping("/loginPage")
-	public String getLoginPage() {
-		logger.info("进入TestController----------跳转登陆页面");
-		return "login";
-	}
-	@RequestMapping("/index")
-	public String index() {
-		logger.info("进入TestController----------跳转index.html");
-		return "index";
-	}
+    @Autowired
+    DoctorLogin doctorLogin;
 
-	@RequestMapping("/login")
-	public String login(User user, Model model,HttpServletRequest request,HttpServletResponse response) {
-		logger.info("获得前台提交用户登陆信息" + user.toString());
-		List<User> users = UserService.getUserUserLogin(user.getUserLogin());
-		logger.info(String.valueOf(users.size()));
-		if (users != null && users.size() > 0) {
+    @RequestMapping("/")
+    public String getIndex() {
+        logger.info("进入TestController----------跳转index.html");
+        return "index";
+    }
 
-			for (User user_ : users) {
-				try {
-					logger.info("进入校验");
-					if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword())) {
-						logger.info("登陆成功---用户为-------" + user_.getUserName());
-						//cookie,和session中设置用户信息
-						setUserInfo(user_,request,response);
-						response.sendRedirect("/");
-						return "index";
-					} else {
-						logger.info("账号密码不匹配" + user.toString());
-						response.sendRedirect("/");
-						return "index";
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					logger.info("md5校验出错" + e.getMessage());
-					e.printStackTrace();
-				}
-			}
-		}
-		try {
-			response.sendRedirect("/");
-			return "loginPage";
-		}catch (IOException e){
-			logger.info(e.getMessage());
-		}
-		return "loginPage";
-	}
+    @RequestMapping("/loginPage")
+    public String getLoginPage() {
+        logger.info("进入TestController----------跳转登陆页面");
+        return "login";
+    }
 
-	public void setUserInfo(User user_, HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		logger.info("外部的SessionId:" + session.getId());
-		session.setAttribute("userLogin", user_.getUserLogin());
-		session.setAttribute("password", user_.getPassword());
-		session.setAttribute("userinfo", user_);
+    @RequestMapping("/index")
+    public String index() {
+        logger.info("进入TestController----------跳转index.html");
+        return "index";
+    }
 
+    @RequestMapping("/index2")
+    public String index2() {
+        logger.info("进入TestController----------跳转index.html2");
+        return "index2";
+    }
 
-		//把用户账号设置到Cookie中
-		Cookie userInfoCookie = new Cookie("userLogin", user_.getUserLogin());
-		userInfoCookie.setMaxAge(500);
-		userInfoCookie.setPath("/");
-		response.addCookie(userInfoCookie);
+    @RequestMapping("/login")
+    public String login(LoginVo user, Model model, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("获得前台提交用户登陆信息" + user.toString());
+        if (user ==null || StringUtils.isBlank(user.getType())) {
+            return "login";
+        }
+        String type = user.getType();
 
-		Cookie[] cookies = request.getCookies();
-		if(cookies!=null&&cookies.length>0){
-			for (Cookie cookie:cookies){
-				if(cookie.getName().equals("JSESSIONID")){
-					logger.info("cookie_JSESSIONID||"+session.getId());
-					cookie.setValue(session.getId());
-					cookie.setPath("/");
-					cookie.setMaxAge(500);
-					response.addCookie(cookie);
-				}
-			}
-		}else{
-			logger.info("cookie_JSESSIONID||"+session.getId());
-			Cookie JSESSIONID_ = new Cookie("JSESSIONID", session.getId());
-			response.addCookie(userInfoCookie);
-		}
+        if ("医生".equals(type)) {
+          return   doctorLogin.Login( user, model,  request,  response);
+        } else if ("guan".equals(type)) {
 
-	}
+        }
+        List<User> users = UserService.getUserUserLogin(user.getUserLogin());
+        logger.info(String.valueOf(users.size()));
+        if (users != null && users.size() > 0) {
+
+            for (User user_ : users) {
+                try {
+                    logger.info("进入校验");
+                    if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), user_.getPassword())) {
+                        logger.info("登陆成功---用户为-------" + user_.getUserName());
+                        //cookie,和session中设置用户信息
+                        setUserInfo(user_, request, response,type);
+                        response.sendRedirect("/");
+                        return "index";
+                    } else {
+                        logger.info("账号密码不匹配" + user.toString());
+                        response.sendRedirect("/");
+                        return "index";
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    logger.info("md5校验出错" + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            response.sendRedirect("/");
+            return "loginPage";
+        } catch (IOException e) {
+            logger.info(e.getMessage());
+        }
+        return "loginPage";
+    }
+
+    public void setUserInfo(User user_, HttpServletRequest request, HttpServletResponse response,String type) {
+        HttpSession session = request.getSession();
+        logger.info("外部的SessionId:" + session.getId());
+        session.setAttribute("userLogin", user_.getUserLogin());
+        session.setAttribute("password", user_.getPassword());
+        session.setAttribute("userinfo", user_);
+        session.setAttribute("type", type);
+
+        //把用户账号设置到Cookie中
+        Cookie userInfoCookie = new Cookie("userLogin", user_.getUserLogin());
+        doctorLogin.setSession(userInfoCookie, session, request, response);
+    }
 }

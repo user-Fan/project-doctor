@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class Interceptor implements HandlerInterceptor {
 	private IUserService userService;
 
 	public final Logger logger = LoggerFactory.getLogger(Interceptor.class);
+
+	@Autowired
+	private IDoctorService doctorService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -52,12 +56,30 @@ public class Interceptor implements HandlerInterceptor {
 				for (Cookie cookie2:cookies)
 					if (cookie2.getName().equals("userLogin") && cookie2.getValue() != null) {
 						if (cookie2.getValue().equals(session.getAttribute("userLogin"))) {
-							String realPassword = getRealPassword(cookie2.getValue());
+							String realPassword = null;
+							String type = (String) session.getAttribute("type");
+							if ("用户".equals(type)){
+								 realPassword = getRealPassword(cookie2.getValue(),"用户");
+							}else if ("医生".equals(type)){
+								 realPassword = getRealPassword(cookie2.getValue(),"医生");
+							}else if ("管理员".equals(type)){
+								 realPassword = getRealPassword(cookie2.getValue(),"管理员");
+							}
 							if (realPassword!=null&&!realPassword.equals("")){
 								String password = (String)session.getAttribute("password");
 								if (password.equals(realPassword)){
-									response.sendRedirect("/index");
-									logger.info("进入拦截器-----------登陆");
+									if("用户".equals(session.getAttribute("type"))){
+										response.sendRedirect("/index");
+										logger.info("进入拦截器-----------用户登陆");
+										return true;
+									}else if ("医生".equals(session.getAttribute("type"))){
+										response.sendRedirect("/index2");
+										logger.info("进入拦截器-----------医生登陆");
+										return true;
+									}else if("管理员".equals(session.getAttribute("type"))){
+										response.sendRedirect("/index");
+										logger.info("进入拦截器-----------登陆");
+									}
 									return true;
 								}
 							}else{
@@ -87,13 +109,16 @@ public class Interceptor implements HandlerInterceptor {
         logger.info("进入了afterCompletion方法！！！！");
 	}
 
-	public String  getRealPassword(String userLogin){
+	public String  getRealPassword(String userLogin ,String type){
 		String realPassword = null;
-		if(userService.getUserUserLogin(userLogin).get(0)!=null){
-
-			return realPassword = userService.getUserUserLogin(userLogin).get(0).getPassword();
+		if("用户".equals(type)){
+			 realPassword = userService.getUserUserLogin(userLogin).get(0).getPassword();
+			 return realPassword;
+		}else if ("医生".equals(type)){
+			realPassword = doctorService.findByAccount(userLogin).getDoctorPassword();
+		}else if ("管理员".equals(type)){
+		/*	realPassword = userService.getDoctorUserLogin(userLogin).get(0).getPassword();*/
 		}
 		return realPassword;
 	}
-
 }

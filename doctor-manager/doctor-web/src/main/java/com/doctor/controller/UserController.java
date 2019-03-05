@@ -184,8 +184,8 @@ public class UserController {
         try {
             HttpSession session = request.getSession(false);
             //获取session中的用户信息
-            User userinfo = (User) session.getAttribute("userinfo");
-            if (null == userinfo){
+          session.getAttribute("userinfo");
+            if (null == session){
                 return 1;
             }else {
                 return 0;
