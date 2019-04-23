@@ -14,6 +14,8 @@ public class OrderVo {
 
     private Integer id;
 
+    private String userName;
+
     private Integer userId;
 
     private Integer doctorId;
@@ -35,6 +37,14 @@ public class OrderVo {
     private Integer remind;
 
     private String statusMsg;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Integer getId() {
         return id;

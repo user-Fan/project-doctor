@@ -42,12 +42,13 @@
                                             <thead>
                                             <tr>
                                                 <th>订单编号</th>
-                                                <th>订单积分</th>
-                                                <th>医生</th>
+                                                <th>病人姓名</th>
+                                                <th>就诊号码</th>
                                                 <th>订单原因</th>
                                                 <th>创建时间</th>
                                                 <th>就诊时间</th>
-                                                <th>立即支付</th>
+                                                <th>订单积分</th>
+                                                <th>确认就诊</th>
                                             </tr>
                                             </thead>
                                             <tbody id="orderList">
@@ -99,7 +100,7 @@
         cache: false,
         async: false,
         dataType: 'json', type: 'post',
-        url: "/getAllOrderByUserid",
+        url: "/getAllOrderByDoctor",
         success: function (data) {
             var json = data;
             for (var i = 0; i < json.length; i++) {
@@ -111,28 +112,28 @@
     function toapply(id) {
        /* alert(id);*/
         $.ajax
-         ({
-             cache: false,
-             async: false,
-             dataType: 'json',
-             type: 'post',
-             data:{"id":id},
-             url: "/toapply",
-             success: function (data) {
-                 if (data==1){
+        ({
+            cache: false,
+            async: false,
+            dataType: 'json',
+            type: 'post',
+            data:{"id":id},
+            url: "/toapply",
+            success: function (data) {
+                if (data==1){
 
-                     alert("支付成功");
-                     history.go(0);
+                    alert("支付成功");
+                    history.go(0);
 
-                 } else {
-                     alert("支付失败");
-                     eco_refresh();
-                 }
-             },error:function () {
-                 alert("支付失败");
-                 location = location;
-             }
-         });
+                } else {
+                    alert("支付失败");
+                    eco_refresh();
+                }
+            },error:function () {
+                alert("支付失败");
+                location = location;
+            }
+        });
     }
 
     function eco_refresh(){

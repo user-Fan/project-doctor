@@ -11,12 +11,11 @@ import com.doctor.pojo.Doctor;
 import com.doctor.pojo.Order;
 import com.doctor.pojo.User;
 import com.doctor.pojo.vo.OrderListVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService implements IOrderService {
@@ -30,7 +29,8 @@ public class OrderService implements IOrderService {
 
 
     @Override
-    public int createOrder(OrderVo orderVo) {
+    public HashMap<String,Object> createOrder(OrderVo orderVo) {
+        HashMap<String,Object> result = new HashMap<>();
         //创建后台订单对象
         Order order = new Order();
         //设置订单的用户id
@@ -42,14 +42,24 @@ public class OrderService implements IOrderService {
         //设置订单的用户就诊时间
         order.setEndTime(Formate.format(orderVo.getEndTime()));
         //设置订单创建时间
-        order.setBeginTime(new Date());
-        return  orderMapper.insert(order);
+        Date createTime = new Date();
+        order.setBeginTime(createTime);
+        result.put("result",orderMapper.insert(order));
+        result.put("createTime",createTime);
+        result.put("id",orderVo.getUserId());
+        result.put("doctorId",orderVo.getDoctorId());
+        return result;
     }
 
     @Override
     public List<OrderVo> getAllOrderByUserid(Integer userId) {
         List<Order> list = orderMapper.getAllOrderByUserid(userId);
       return getOrderVoList(list);
+    }
+
+    @Override
+    public List<Order> getAllOrderByUserid_v2(Integer userId) {
+        return   orderMapper.getAllOrderByUserid(userId);
     }
 
     @Override
@@ -105,6 +115,9 @@ public class OrderService implements IOrderService {
             if (null!=list.get(i).getStatus()&&null!=list.get(i).getPay()){
                 String orderMsg = getStatusMsg(list.get(i).getPay(),list.get(i).getStatus());
                 orderVo.setStatusMsg(orderMsg);
+            }
+            if(null!=list.get(i).getUserName()&& StringUtils.isNotBlank(list.get(i).getUserName())){
+                orderVo.setUserName(list.get(i).getUserName());
             }
             result.add(orderVo);
 
@@ -201,5 +214,10 @@ public class OrderService implements IOrderService {
         }
 
 
+    }
+
+    @Override
+    public List<OrderVo> getAllOrderByDoctorID(Integer doctorId) {
+        return  getOrderVoList(orderMapper.getAllOrderByDoctorIDAndTime(doctorId));
     }
 }

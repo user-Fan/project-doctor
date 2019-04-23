@@ -7,6 +7,8 @@ public class Order {
 
     private Integer userId;
 
+    private String userName;
+
     private Integer doctorId;
 
     private String orderNumber;
@@ -32,6 +34,14 @@ public class Order {
     private Integer orderPoint;
 
     private String doctorName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getDoctorName() {
         return doctorName;

@@ -36,4 +36,7 @@ public interface OrderMapper {
     List <Order> orderLoge(Integer userId);
 
     List<Order> selectOrderList();
+
+    //查询医生今天的所有预约单
+    List<Order> getAllOrderByDoctorIDAndTime(Integer doctorId);
 }
