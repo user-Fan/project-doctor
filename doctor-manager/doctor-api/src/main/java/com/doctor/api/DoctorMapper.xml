@@ -21,11 +21,12 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="updateBy" property="updateby" jdbcType="VARCHAR"/>
         <result column="doctor_status" property="doctorStatus" jdbcType="INTEGER"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
     doctor_id, doctor_email,doctor_account, doctor_password, doctor_name, doctor_phone, doctor_card_id,
     denger, age, address, doctor_title, doctor_introduce, item_parent_num, permissions_id,
-    creat_time, creatBy, update_time, updateBy, doctor_status
+    creat_time, creatBy, update_time, updateBy, doctor_status,photo
   </sql>
     <select id="findByPhone" resultMap="BaseResultMap" parameterType="String">
         select<include refid="Base_Column_List"/>from doctor where doctor_phone = #{userPhone}

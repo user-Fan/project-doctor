@@ -41,6 +41,8 @@ public class Doctor {
 
     private Integer doctorStatus;
 
+    private String photo;
+
     public String getDoctorEmail() {
         return doctorEmail;
     }
@@ -193,6 +195,14 @@ public class Doctor {
         this.doctorStatus = doctorStatus;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     @Override
     public String toString() {
         return "Doctor{" +
@@ -215,6 +225,7 @@ public class Doctor {
                 ", updateTime=" + updateTime +
                 ", updateby='" + updateby + '\'' +
                 ", doctorStatus=" + doctorStatus +
+                ", photo='" + photo + '\'' +
                 '}';
     }
 }
