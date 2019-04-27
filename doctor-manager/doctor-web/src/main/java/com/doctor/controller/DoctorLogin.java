@@ -30,7 +30,7 @@ public class DoctorLogin {
         Doctor  doctor = doctorService.findByAccount(user.getUserLogin());
         if (doctor != null ) {
                 try {
-                    if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), doctor.getDoctorPassword())) {
+                    if (MD5Utill.verify(user.getUserLogin(), user.getPassword(), doctor.getDoctorPassword())&&doctor.getDoctorStatus()==1) {
                         //cookie,和session中设置用户信息
                         setUserInfo(doctor, request, response);
                         return "index2";
