@@ -76,7 +76,7 @@
         1 = 1
         AND order_user.doctor_id = #{doctorId,jdbcType=INTEGER}
         and `user`.user_id = order_user.user_id
-        and order_user.put_time>CURRENT_DATE()
+        and order_user.end_time =CURRENT_DATE()
         and order_user.pay=1
         AND order_user.`status`=1
   </select>
