@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class OrderController {
@@ -156,6 +153,18 @@ public class OrderController {
         return "0";
     }
 
+    //取消未支付订单方法
+    @RequestMapping("quxiaoOrderV3")
+    @ResponseBody
+    public String endOrder(String id, HttpServletRequest request) {
+        Integer idd = Integer.parseInt(id);
+        int result = orderService.endOrder(idd);
+        if (1 == result) {
+            return "1";
+        }
+        return "0";
+    }
+
     //获取session 用户信息
     private User getSessionUser(HttpServletRequest request){
         HttpSession session = request.getSession(false);
@@ -211,8 +220,29 @@ public class OrderController {
     public List<OrderVo> getAllOrderByDoctor(HttpServletRequest request){
         Doctor doctor = getSessionDoctor(request);
         if(null!=doctor&&null!=doctor.getDoctorId()){
-            orderService.getAllOrderByDoctorID(doctor.getDoctorId());
+        return  orderService.getAllOrderByDoctorID(doctor.getDoctorId());
         }
         return null;
+    }
+
+    @ApiOperation(value = "查询所有订单")
+    @RequestMapping(value = "/orderListV2", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String orderListV2(HttpServletRequest request) {
+        Doctor doctor = getSessionDoctor(request);
+        try {
+            List<OrderListVO> listVOS2 =new ArrayList<>();
+            List<OrderListVO> listVOS = orderService.orderList();
+            for (OrderListVO orderListVO:listVOS
+            ) {
+                if (null!=doctor&&null!=orderListVO&&StringUtils.isNotBlank(orderListVO.getDoctorName())&&doctor.getDoctorName().equals(orderListVO.getDoctorName())){
+                    listVOS2.add(orderListVO);
+                }
+            }
+            return ReturnUtil.toJSONString(0, "查询成功", listVOS2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnUtil.toJSONString(1, "系统错误", null);
+        }
     }
 }

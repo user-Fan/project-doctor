@@ -134,6 +134,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public int endOrder(Integer id) {
+        Order order = new Order();
+        order.setId(id);
+        order.setStatus(2);
+        return orderMapper.updateByPrimaryKey(order);
+    }
+
+    @Override
     public List<OrderVo> getOKOrderByUserid(Integer userId) {
         List<Order> list = orderMapper.getOKOrderByUserid(userId);
         return getOrderVoList(list);
@@ -170,7 +178,9 @@ public class OrderService implements IOrderService {
                 User user = userMapper.findByIds(orders.get(i).getUserId());
                 Doctor doctor = doctorMapper.findByIds(orders.get(i).getDoctorId());
                 //用户姓名
-                orderListVO.setUserName(user.getUserName());
+                if(null!=user&&StringUtils.isNotBlank(user.getUserName())){
+                    orderListVO.setUserName(user.getUserName());
+                }
                 //医生姓名
                 orderListVO.setDoctorName(doctor.getDoctorName());
                 //挂号号码

@@ -6,6 +6,7 @@ import com.doctor.Iservice.IDoctorService;
 import com.doctor.Iservice.IUserPasswordSevice;
 import com.doctor.Iservice.IUserService;
 import com.doctor.common.ReturnUtil;
+import com.doctor.pojo.Doctor;
 import com.doctor.pojo.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -189,17 +190,31 @@ public class UserController {
     public String ifSession(HttpServletRequest request){
         try {
             HttpSession session = request.getSession(false);
-            //获取session中的用户信息
-            User userinfo = (User) session.getAttribute("userinfo");
-            if (null == userinfo){
+            if (null==session){
                 return ReturnUtil.toJSONString(1, "session无效", null);
-            }else {
-                return ReturnUtil.toJSONString(0, "session有效", userinfo);
+            }
+            //获取session中的用户信息
+            String type  = (String) session.getAttribute("type");
+            if("医生".equals(type)){
+                Doctor userinfo = (Doctor)session.getAttribute("userinfo");
+                if (null == userinfo){
+                    return ReturnUtil.toJSONString(1, "session无效", null);
+                }else {
+                    return ReturnUtil.toJSONString(0, "session有效", userinfo);
+                }
+            }else if("用户".equals(type)){
+                User userinfo = (User)session.getAttribute("userinfo");
+                if (null == userinfo){
+                    return ReturnUtil.toJSONString(1, "session无效", null);
+                }else {
+                    return ReturnUtil.toJSONString(0, "session有效", userinfo);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
             return ReturnUtil.toJSONString(1, "系统错误", null);
         }
+        return ReturnUtil.toJSONString(1, "系统错误", null);
     }
 
     @ApiOperation(value = "退出")
@@ -209,7 +224,6 @@ public class UserController {
         try {
             HttpSession session = request.getSession(false);
             //获取session中的用户信息
-            User userinfo = (User) session.getAttribute("userinfo");
             session.removeAttribute("userinfo");
             return 1;
         }catch (Exception e){

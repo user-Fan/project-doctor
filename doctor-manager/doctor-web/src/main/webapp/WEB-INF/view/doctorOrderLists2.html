@@ -26,32 +26,30 @@
 <div class="app header-default side-nav-dark">
     <div class="layout">
         <div class="page-container">
-
             <div class="main-content">
-
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">Default Datatable</h4>
+                                    <h4 class="card-title">订单管理</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th>订单编号</th>
-                                                <th>病人姓名</th>
-                                                <th>就诊号码</th>
-                                                <th>订单原因</th>
-                                                <th>创建时间</th>
+                                                <th>用户姓名</th>
+                                                <th>医生姓名</th>
+                                                <th>挂号号码</th>
+                                                <th>挂号时间</th>
                                                 <th>就诊时间</th>
-                                                <th>订单积分</th>
-                                                <th>确认就诊</th>
+                                                <th>挂号原因</th>
+                                                <th>订单状态</th>
+                                                <th>交易积分</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="orderList">
+                                            <tbody id="ccc">
 
                                             </tbody>
                                         </table>
@@ -62,15 +60,14 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-
-    <div id="preloader">
-        <div class="loader" id="loader-1"></div>
     </div>
 </div>
 
+
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
 <script src="assets/js/jquery-min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -93,56 +90,36 @@
 <script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
 
 <script src="assets/js/datatables.init.js"></script>
-
 <script type="text/javascript">
-    $.ajax
-    ({
+
+    $.ajax({
         cache: false,
         async: false,
-        dataType: 'json', type: 'post',
-        url: "/getAllOrderByDoctor",
-        success: function (data) {
-            var json = data;
-            for (var i = 0; i < json.length; i++) {
-                $("#orderList").append("<tr>" + "<td>" + json[i].id + "</td>" + "<td>" + json[i].userName + "</td><td>" + json[i].orderNumber + "</td><td>" + json[i].putReason + "</td><td>" + json[i].beginTime + "</td><td>" + json[i].endTime + "</td>"+"<td>" + json[i].orderPoint + "</td>"+"<td><button type='button' class='btn btn-success btn-rounded' onclick='toapply(" + "&quot;" + json[i].id + "&quot;" + ")' >完成订单</button></td></tr>");
-            }
-        }
-    });
-
-    function toapply(id) {
-       /* alert(id);*/
-        $.ajax
-        ({
-            cache: false,
-            async: false,
-            dataType: 'json',
-            type: 'post',
-            data:{ "id":id},
-            url: "/quxiaoOrderV3",
-            success: function (data) {
-                if (data==1){
-
-                    alert("确认就诊");
-                    history.go(0);
-
-                } else {
-                    alert("确认失败");
-                    eco_refresh();
+        url: "/orderListV2",
+        type: "post",
+        contentType: "application/json;cherset=utf-8",
+        dataType: "json",
+        success: function (success) {
+            var user = JSON.stringify(success);
+            var datas = $.parseJSON(user);
+            var rel = JSON.stringify(datas.code);
+            if (rel == 0) {
+                var datac = JSON.stringify(datas.data);
+                var data = JSON.parse(datac);
+                for (var i = 0; i < data.length; i++) {
+                    $("#ccc").append("<tr><td>" + data[i].userName + "</td><td>" + data[i].doctorName + "</td><td>" + data[i].registrationNum + "</td><td>" + data[i].registrationTime + "</td><td>" + data[i].attendanceTime + "</td><td>" + data[i].registrationCause + "</td><td>" + data[i].orderState + "</td><td>" + data[i].integral + "</td></tr>");
                 }
-            },error:function () {
-                alert("确认失败");
-                eco_refresh();
+            } else {
+                var msg = JSON.stringify(datas.msg);
+                alert(msg);
             }
-        });
-    }
-
-    function eco_refresh(){
-        var _body = window.parent;
-        var _iframe1=_body.document.getElementById('getPage');
-        window.onbeforeunload=function(){};
-        _iframe1.contentWindow.location.reload(true);
-    }
+        },
+    });
 </script>
+
+
 </body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
 
 </html>

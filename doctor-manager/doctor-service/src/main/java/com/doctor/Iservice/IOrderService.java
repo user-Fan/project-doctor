@@ -20,6 +20,8 @@ public interface IOrderService {
     int toapply(Integer id,Integer point,String type);
     //取消未支付订单
     int quxiaoOrder(Integer userId);
+    //完成订单
+    int endOrder (Integer userId);
 
     List<OrderListVO> orderList();
 
