@@ -127,4 +127,5 @@ public class LoginController {
         Cookie userInfoCookie = new Cookie("userLogin", user_.getUserLogin());
         doctorLogin.setSession(userInfoCookie, session, request, response);
     }
+    /***31232132**/
 }
