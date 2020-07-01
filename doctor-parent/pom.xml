@@ -27,7 +27,7 @@
     <jedis.version>2.7.2</jedis.version>
     <solrj.version>4.10.3</solrj.version>
     <freemarker.version>2.3.23</freemarker.version>
-    <quartz.version>2.2.2</quartz.version>
+    <quartz.version>2.3.2</quartz.version>
     <logback.version>1.2.3</logback.version>
   </properties>
   <dependencyManagement>
